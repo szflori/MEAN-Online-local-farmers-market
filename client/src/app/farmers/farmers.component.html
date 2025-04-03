@@ -1,0 +1,16 @@
+<div class="farmers-container">
+    <h2>Farmerek</h2>
+    <div class="farmer-grid">
+        <mat-card *ngFor="let farmer of farmers" class="farmer-card">
+            <img mat-card-avatar [src]="farmer.avatarUrl" [alt]="farmer.name">
+            <mat-card-title>{{ farmer.name }}</mat-card-title>
+            <mat-card-subtitle>{{ farmer.location }}</mat-card-subtitle>
+            <mat-card-content>
+                <p>{{ farmer.bio }}</p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary">Termékek megtekintése</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

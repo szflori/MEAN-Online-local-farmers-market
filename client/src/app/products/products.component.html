@@ -1,0 +1,42 @@
+<div class="products-container">
+    <h2>Termékek</h2>
+
+    <div class="filters">
+        <mat-form-field appearance="outline">
+            <mat-label>Keresés</mat-label>
+            <input matInput [(ngModel)]="searchQuery" (input)="filterProducts()" placeholder="Pl. alma">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Kategória</mat-label>
+            <mat-select [(value)]="selectedCategory" (selectionChange)="filterProducts()">
+                <mat-option *ngFor="let cat of categories" [value]="cat">{{ cat }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Rendezés</mat-label>
+            <mat-select [(value)]="sortOption" (selectionChange)="filterProducts()">
+                <mat-option value="name">Név szerint</mat-option>
+                <mat-option value="price">Ár szerint</mat-option>
+                <mat-option value="stock">Készlet szerint</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="product-grid">
+        <mat-card *ngFor="let product of filteredProducts" class="product-card">
+            <img mat-card-image [src]="product.imageUrl" [alt]="product.name" />
+            <mat-card-title>{{ product.name }}</mat-card-title>
+            <mat-card-subtitle>{{ product.price | currency:'HUF' }}</mat-card-subtitle>
+            <mat-card-content>
+                <p>{{ product.description }}</p>
+                <p><strong>Kategória:</strong> {{ product.category }}</p>
+                <p><strong>Készleten:</strong> {{ product.stock }} db</p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button color="primary">Kosárba</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

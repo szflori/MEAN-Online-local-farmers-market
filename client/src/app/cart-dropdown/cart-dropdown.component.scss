@@ -1,0 +1,22 @@
+::ng-deep .cart-dropdown {
+    padding: 0.5rem 1rem;
+    width: 250px;
+  
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.25rem 0;
+    }
+  
+    .cart-total {
+      font-weight: bold;
+      padding: 0.5rem 0;
+    }
+  
+    .empty-cart {
+      text-align: center;
+      padding: 1rem 0;
+      font-style: italic;
+    }
+  }
+  

@@ -1,0 +1,18 @@
+<mat-toolbar color="primary" class="container">
+  <div class="left">
+    <button mat-icon-button (click)="menuToggle.emit()" aria-label="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+
+  <div class="center">
+    <span class="logo" routerLink="/">🛒 Farmers Market</span>
+  </div>
+
+  <nav class="right">
+    <app-cart-dropdown [cartItems]="cartItems"></app-cart-dropdown>
+
+    <button mat-button routerLink="/login">Bejelentkezés</button>
+    <button mat-stroked-button color="accent" routerLink="/register">Regisztráció</button>
+  </nav>
+</mat-toolbar>
