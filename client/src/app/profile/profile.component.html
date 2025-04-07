@@ -1,0 +1,45 @@
+<div class="profile-container">
+    <mat-card>
+        <div class="profile-header">
+            <img src="https://via.placeholder.com/100" alt="avatar" class="avatar">
+            <div class="info" *ngIf="!editing; else editForm">
+                <h2>{{ profileForm.value.name }}</h2>
+                <p>{{ profileForm.value.email }}</p>
+                <p>{{ profileForm.value.location }}</p>
+            </div>
+        </div>
+
+        <ng-template #editForm>
+            <form [formGroup]="profileForm">
+                <mat-form-field class="full-width">
+                    <mat-label>Név</mat-label>
+                    <input matInput formControlName="name">
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email">
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                    <mat-label>Helyszín</mat-label>
+                    <input matInput formControlName="location">
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                    <mat-label>Bemutatkozás</mat-label>
+                    <textarea matInput rows="3" formControlName="bio"></textarea>
+                </mat-form-field>
+            </form>
+        </ng-template>
+
+        <mat-divider></mat-divider>
+        <div class="bio" *ngIf="!editing">
+            <p>{{ profileForm.value.bio }}</p>
+        </div>
+
+        <mat-card-actions>
+            <button *ngIf="!editing" mat-raised-button color="primary" (click)="toggleEdit()">Profil
+                szerkesztése</button>
+            <button *ngIf="editing" mat-raised-button color="accent" (click)="save()">Mentés</button>
+            <button *ngIf="editing" mat-button (click)="toggleEdit()">Mégse</button>
+        </mat-card-actions>
+    </mat-card>
+</div>

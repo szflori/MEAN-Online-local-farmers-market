@@ -7,14 +7,18 @@ import { RegisterComponent } from './auth/register/register.component';
 import { CartComponent } from './cart/cart.component';
 import { ProductsComponent } from './products/products.component';
 import { FarmersComponent } from './farmers/farmers.component';
+import { FarmerProductsComponent } from './farmers/farmer-products/farmer-products.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'profile', component: ProfileComponent },
   { path: 'cart', component: CartComponent },
   { path: 'products', component: ProductsComponent },
   { path: 'farmers', component: FarmersComponent },
+  { path: 'farmers/:id/products', component: FarmerProductsComponent },
 ];
 
 @NgModule({

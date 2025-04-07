@@ -27,9 +27,13 @@ import { CartDropdownComponent } from './cart-dropdown/cart-dropdown.component';
 import { ProductsComponent } from './products/products.component';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
+import { MatFormField, MatInputModule } from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FarmersComponent } from './farmers/farmers.component';
+import { FarmerProductsComponent } from './farmers/farmer-products/farmer-products.component';
+import { ProfileComponent } from './profile/profile.component';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -41,10 +45,14 @@ import { FarmersComponent } from './farmers/farmers.component';
     CartDropdownComponent,
     ProductsComponent,
     FarmersComponent,
+    FarmerProductsComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    CommonModule,
+    ReactiveFormsModule,
     AuthModule,
     MatButtonModule,
     MatToolbarModule,
@@ -61,7 +69,10 @@ import { FarmersComponent } from './farmers/farmers.component';
     MatOptionModule,
     MatSelectModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    MatFormField,
+    MatFormFieldModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent],
