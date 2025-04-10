@@ -3,19 +3,30 @@
  * This is only a minimal backend to get started.
  */
 
-import express from 'express';
-import expressSession, { SessionOptions } from 'express-session';
-import * as path from 'path';
-import dotenv from 'dotenv';
-import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
+import express from "express";
+import expressSession, { SessionOptions } from "express-session";
+import * as path from "path";
+import dotenv from "dotenv";
+import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
+import mongoose from "mongoose";
 
-import passport from './configs/passport';
-import { authRoutes, ordersRoutes, productsRoutes } from './routes/routes';
+import passport from "./configs/passport";
+import { configureRoutes } from "./routes";
 
-dotenv.config(); // TODO CHECK hogy szükséges-e?
+dotenv.config();
 
 const app = express();
+
+mongoose
+  .connect(process.env.DATABASE_URL as string)
+  .then((_) => {
+    console.log("Successfully connected to MongoDB.");
+  })
+  .catch((error) => {
+    console.log(error);
+    return;
+  });
 
 // Middleware-ek
 app.use(express.json());
@@ -34,18 +45,18 @@ app.use(passport.session());
 
 const port = process.env.PORT || 3333;
 
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
+app.use("/assets", express.static(path.join(__dirname, "assets")));
 
-app.use('/api/auth/', authRoutes(express.Router()));
-app.use('/api/products/', productsRoutes(express.Router()));
-app.use('/api/orders/', ordersRoutes(express.Router()));
+app.use('/app', configureRoutes(passport, express.Router()));
 
 app.get("/", (_req, res) => {
-  res.send("API is running 🚀");
+  res.send("APP is running 🚀");
 });
 
 const server = app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}/api`);
 });
 
-server.on('error', console.error);
+server.on("error", console.error);
+
+console.log('After server is ready.');
