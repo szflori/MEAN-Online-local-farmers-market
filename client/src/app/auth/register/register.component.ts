@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../auth.service';
+import { SuccessDialogComponent } from '../../shared/success-dialog/success-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { ErrorDialogComponent } from '../../shared/error-dialog/error-dialog.component';
 
 @Component({
   selector: 'app-register',
@@ -8,19 +13,40 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
-  registerForm: FormGroup;
+  form: FormGroup;
 
-  constructor(private fb: FormBuilder) {
-    this.registerForm = this.fb.group({
+  constructor(
+    private fb: FormBuilder,
+    private auth: AuthService,
+    private dialog: MatDialog,
+    private router: Router
+  ) {
+    this.form = this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
-  onSubmit() {
-    if (this.registerForm.valid) {
-      console.log('Regisztrációs adatok:', this.registerForm.value);
+  async onSubmit() {
+    if (this.form.invalid) return;
+
+    try {
+      const response = await this.auth.register(this.form.value);
+      this.dialog
+        .open(SuccessDialogComponent, {
+          data: { message: response.message || 'You can now log in.' },
+        })
+        .afterClosed()
+        .subscribe(() => {
+          this.router.navigate(['/login']);
+        });
+    } catch (err: any) {
+      this.dialog.open(ErrorDialogComponent, {
+        data: {
+          message: err.message || 'Something went wrong during registration.',
+        },
+      });
     }
   }
 }

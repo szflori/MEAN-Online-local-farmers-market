@@ -26,8 +26,6 @@ This project is a **MEAN stack** web application built using **Nx workspace** th
 | **Database** | MongoDB + Mongoose |
 | **Authentication** | JSON Web Token (JWT) |
 | **Styling** | Angular Material / Bootstrap |
-| **Image Upload** | Multer (Node.js) |
-| **Notifications** | WebSocket / Firebase Notifications |
 
 ## **Installation & Usage**
 ### **1. Clone Repository**

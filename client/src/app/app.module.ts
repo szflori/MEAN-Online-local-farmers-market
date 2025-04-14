@@ -34,6 +34,9 @@ import { FarmerProductsComponent } from './farmers/farmer-products/farmer-produc
 import { ProfileComponent } from './profile/profile.component';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { SuccessDialogComponent } from './shared/success-dialog/success-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ErrorDialogComponent } from './shared/error-dialog/error-dialog.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +50,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     FarmersComponent,
     FarmerProductsComponent,
     ProfileComponent,
+    SuccessDialogComponent,
+    ErrorDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,6 +77,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     FormsModule,
     MatFormField,
     MatFormFieldModule,
+    MatDialogModule
 
   ],
   providers: [],
