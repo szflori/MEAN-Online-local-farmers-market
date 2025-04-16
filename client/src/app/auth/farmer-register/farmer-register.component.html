@@ -1,0 +1,36 @@
+<div class="register-container">
+    <mat-card>
+        <div class="wrapper">
+            <mat-card-title>Regisztráció</mat-card-title>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Név</mat-label>
+                <input matInput formControlName="name" type="text" required />
+                <mat-error *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
+                    A név megadása kötelező
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" type="email" required />
+                <mat-error *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+                    Érvényes email szükséges
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Jelszó</mat-label>
+                <input matInput formControlName="password" type="password" required />
+                <mat-error *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
+                    Minimum 6 karakter
+                </mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="accent" type="submit" [disabled]="form.invalid">
+                Regisztráció
+            </button>
+        </form>
+    </mat-card>
+</div>

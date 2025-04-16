@@ -1,6 +1,8 @@
 <div class="farmers-container">
     <h2>Farmerek</h2>
-    <div class="farmer-grid">
+    <div *ngIf="loading">Loading farmers...</div>
+    <div *ngIf="error" class="error">{{ error }}</div>
+    <div *ngIf="!loading && !error" class="farmer-grid">
         <mat-card *ngFor="let farmer of farmers" class="farmer-card">
             <img mat-card-avatar [src]="farmer.avatarUrl" [alt]="farmer.name">
             <mat-card-title>{{ farmer.name }}</mat-card-title>

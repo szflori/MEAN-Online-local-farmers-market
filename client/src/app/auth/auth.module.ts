@@ -12,12 +12,14 @@ import {
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { FarmerRegisterComponent } from './farmer-register/farmer-register.component';
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent],
+  declarations: [LoginComponent, RegisterComponent, FarmerRegisterComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -29,6 +31,7 @@ import { RegisterComponent } from './register/register.component';
     MatError,
     MatButtonModule,
     MatIconModule,
+    MatTabsModule,
   ],
 })
 export class AuthModule {}

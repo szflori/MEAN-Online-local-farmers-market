@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductsService } from './products.service';
 
 interface Product {
   id: string;
@@ -18,6 +19,8 @@ interface Product {
 })
 export class ProductsComponent implements OnInit {
   products: Product[] = [];
+  loading = true;
+  error: string | null = null;
   filteredProducts: Product[] = [];
   searchQuery = '';
   selectedCategory = 'all';
@@ -25,36 +28,16 @@ export class ProductsComponent implements OnInit {
 
   categories = ['all', 'Gyümölcs', 'Méz', 'Lekvár'];
 
-  ngOnInit(): void {
-    this.products = [
-      {
-        id: '1',
-        name: 'Bio Alma',
-        description: 'Friss, ropogós alma helyi termelőtől.',
-        price: 250,
-        stock: 15,
-        imageUrl: 'https://via.placeholder.com/150',
-        category: 'Gyümölcs',
-      },
-      {
-        id: '2',
-        name: 'Házi Méz',
-        description: 'Természetes méz a méhészetből.',
-        price: 1800,
-        stock: 8,
-        imageUrl: 'https://via.placeholder.com/150',
-        category: 'Méz',
-      },
-      {
-        id: '3',
-        name: 'Kézműves Lekvár',
-        description: 'Saját készítésű gyümölcslekvár.',
-        price: 950,
-        stock: 20,
-        imageUrl: 'https://via.placeholder.com/150',
-        category: 'Lekvár',
-      },
-    ];
+  constructor(private productsService: ProductsService) {}
+
+  async ngOnInit() {
+    try {
+      this.products = await this.productsService.getProducts();
+    } catch (err: any) {
+      this.error = err.message || 'Could not load products';
+    } finally {
+      this.loading = false;
+    }
 
     this.filterProducts();
   }

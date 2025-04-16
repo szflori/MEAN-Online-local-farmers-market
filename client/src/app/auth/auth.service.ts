@@ -25,6 +25,21 @@ export class AuthService {
     }
   }
 
+  async registerFarmer(data: {
+    name: string;
+    email: string;
+    password: string;
+  }) {
+    try {
+      const res = await axios.post(`${this.apiUrl}/register-farmer`, data, {
+        withCredentials: true,
+      });
+      return res.data;
+    } catch (err: any) {
+      throw err.response?.data || { message: 'Network error' };
+    }
+  }
+
   async login(data: { email: string; password: string }) {
     try {
       const res = await axios.post(

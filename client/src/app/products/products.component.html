@@ -24,7 +24,10 @@
         </mat-form-field>
     </div>
 
-    <div class="product-grid">
+    <div *ngIf="loading">Loading products...</div>
+    <div *ngIf="error" class="error">{{ error }}</div>
+
+    <div *ngIf="!loading && !error" class="product-grid">
         <mat-card *ngFor="let product of filteredProducts" class="product-card">
             <img mat-card-image [src]="product.imageUrl" [alt]="product.name" />
             <mat-card-title>{{ product.name }}</mat-card-title>

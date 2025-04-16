@@ -20,6 +20,7 @@ dotenv.config();
 
 const app = express();
 
+// TODO Initialization Dummy data!
 mongoose
   .connect(process.env.DATABASE_URL as string)
   .then((_) => {

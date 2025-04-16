@@ -11,11 +11,13 @@ import { ProductsComponent } from './products/products.component';
 import { FarmersComponent } from './farmers/farmers.component';
 import { FarmerProductsComponent } from './farmers/farmer-products/farmer-products.component';
 import { ProfileComponent } from './profile/profile.component';
+import { FarmerRegisterComponent } from './auth/farmer-register/farmer-register.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'farmer-register', component: FarmerRegisterComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'cart', component: CartComponent },
   { path: 'products', component: ProductsComponent },
