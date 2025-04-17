@@ -13,6 +13,8 @@ import { FarmerProductsComponent } from './farmers/farmer-products/farmer-produc
 import { ProfileComponent } from './profile/profile.component';
 import { FarmerRegisterComponent } from './auth/farmer-register/farmer-register.component';
 
+// TODO Admin
+// TODO Users table
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },

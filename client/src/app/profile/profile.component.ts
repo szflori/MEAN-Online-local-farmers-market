@@ -10,6 +10,7 @@ interface UserProfile {
   bio?: string;
 }
 
+// TODO
 @Component({
   selector: 'app-profile',
   standalone: false,

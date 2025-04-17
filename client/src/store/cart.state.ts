@@ -6,6 +6,7 @@ export interface CartStateModel {
   items: CartItem[];
 }
 
+// TODO guest localstore, bejelentkezsnél clear, 
 @State<CartStateModel>({
   name: 'cart',
   defaults: {

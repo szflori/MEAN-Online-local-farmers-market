@@ -45,7 +45,6 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { CartState } from '../store/cart.state';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { CartItemComponent } from './cart/cart-item/cart-item.component';
-import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 
 @NgModule({
   declarations: [
