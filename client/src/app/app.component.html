@@ -23,6 +23,7 @@
     <app-header (menuToggle)="sidenav.toggle()"></app-header>
 
     <main class="main-content">
+      <app-loading *ngIf="loading$ | async"></app-loading>
       <router-outlet></router-outlet>
     </main>
   </mat-sidenav-content>

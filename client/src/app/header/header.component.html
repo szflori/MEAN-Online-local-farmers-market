@@ -10,7 +10,7 @@
   </div>
 
   <nav class="right">
-    <app-cart-dropdown [cartItems]="cartItems"></app-cart-dropdown>
+    <app-cart-dropdown></app-cart-dropdown>
 
     <ng-container *ngIf="user; else guestLinks">
       <button mat-button [matMenuTriggerFor]="profileMenu">

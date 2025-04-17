@@ -5,10 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   selector: 'app-success-dialog',
   standalone: false,
   template: `
-    <h2 mat-dialog-title>Registration successful</h2>
-    <mat-dialog-content>
-      <p>{{ data.message }}</p>
-    </mat-dialog-content>
+    <h2 mat-dialog-title>{{ data.message }}</h2>
     <mat-dialog-actions>
       <button mat-button (click)="close()">Continue</button>
     </mat-dialog-actions>

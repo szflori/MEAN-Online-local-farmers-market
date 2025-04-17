@@ -1,0 +1,20 @@
+<div class="cart-item" [class.compact]="compact">
+    <img *ngIf="!compact" [src]="item.imageUrl" alt="{{ item.name }}" />
+
+    <div class="details">
+        <div class="name">{{ item.name }}</div>
+        <div class="price">
+            {{ item.price | currency:'HUF' }} x {{ item.quantity }} =
+            {{ item.price * item.quantity | currency:'HUF' }}
+        </div>
+
+        <div class="controls">
+            <button mat-mini-button (click)="decrease()">−</button>
+            <span>{{ item.quantity }}</span>
+            <button mat-mini-button (click)="increase()">+</button>
+            <button mat-icon-button color="warn" (click)="remove()">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>

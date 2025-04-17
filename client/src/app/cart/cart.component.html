@@ -1,20 +1,19 @@
 <div class="cart-container">
-    <h2>Kosár tartalma</h2>
-  
-    <mat-card *ngFor="let item of cartItems; let i = index" class="cart-item">
-      <div class="item-details">
-        <h3>{{ item.name }}</h3>
-        <p>{{ item.quantity }} × {{ item.price | currency:'HUF' }}</p>
+  <h2>Kosár tartalma</h2>
+
+  <ng-container *ngIf="cartItems$ | async as items; else emptyCart">
+    <ng-container *ngIf="items.length > 0; else emptyCart">
+
+      <app-cart-item *ngFor="let item of cartItems$ | async" [item]="item"></app-cart-item>
+
+      <div class="cart-summary">
+        <h3>Összesen: {{ totalPrice$ | async | currency:'HUF' }}</h3>
+        <button mat-raised-button color="primary">Megrendelés</button>
       </div>
-      <button mat-icon-button color="warn" (click)="removeItem(i)" aria-label="Törlés">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </mat-card>
-  
-    <div class="cart-summary" *ngIf="cartItems.length > 0">
-      <h3>Összesen: {{ total | currency:'HUF' }}</h3>
-      <button mat-raised-button color="primary">Megrendelés</button>
-    </div>
-  
-    <p *ngIf="cartItems.length === 0" class="empty-message">A kosarad üres.</p>
-  </div>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #emptyCart>
+    <div class="empty-cart">A kosarad üres</div>
+  </ng-template>
+</div>

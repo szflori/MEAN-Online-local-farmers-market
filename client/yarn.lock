@@ -1748,6 +1748,20 @@
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-19.2.6.tgz#0e529ee5e9d969010e587414f5f662af086214ef"
   integrity sha512-/jWpZUoMru3YbRJAPZ2KroUSzE6Ak5Hav219raYQaBXVtyLAvFE5VC1/CiH0wTYnb/dyjxzWq38ftOr/vv0+tg==
 
+"@ngxs/storage-plugin@^19.0.0":
+  version "19.0.0"
+  resolved "https://registry.yarnpkg.com/@ngxs/storage-plugin/-/storage-plugin-19.0.0.tgz#bb99af239d4505b9dde88f39d568efa3d353c433"
+  integrity sha512-LwOrkVDsr4amcT5FlB9tl4IZnO+OSw7GMmAndCgeNo740BZQG9w9Pp+Rsjr34IhZx8YR5qFbgCLogzBQdSS4Mg==
+  dependencies:
+    tslib "^2.3.0"
+
+"@ngxs/store@^19.0.0":
+  version "19.0.0"
+  resolved "https://registry.yarnpkg.com/@ngxs/store/-/store-19.0.0.tgz#703c9c31a8a2550975c813ccd3c623fae2dad722"
+  integrity sha512-h8xMl3OisrYabdfbUQjy98X/BSaId8t0iX3VlQgOmG0sYuC5OuZvggZywn0urLkA3H97LEI7ihvuS8spEBo6YA==
+  dependencies:
+    tslib "^2.3.0"
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"

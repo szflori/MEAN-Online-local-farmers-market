@@ -1,11 +1,21 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { LoadingService } from './shared/loading/loading.service';
+import { setupAxiosInterceptors } from './core/axios.interceptor';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: false,
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'client';
+  title = 'Farmers Market';
+
+  loading$: Observable<boolean>;
+
+  constructor(private loadingService: LoadingService) {
+    setupAxiosInterceptors(this.loadingService);
+    this.loading$ = this.loadingService.loading$;
+  }
 }

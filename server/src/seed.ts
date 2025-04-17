@@ -2,12 +2,11 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import { ERole, User } from "./model/user.schema";
-import { Product } from "./model/product.schema";
+import { EProductCategory, Product } from "./model/product.schema";
 
 dotenv.config();
 
-const MONGO_URI =
-  process.env.MONGO_URI || "mongodb://localhost:27017/db";
+const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/db";
 
 async function seed() {
   await mongoose.connect(MONGO_URI);
@@ -29,6 +28,8 @@ async function seed() {
       role: ERole.FARMER,
       location: "Szentes",
       bio: "Helyi friss zöldségek",
+      avatarUrl:
+        "https://t3.ftcdn.net/jpg/03/80/27/88/360_F_380278806_hU362lmcYRqkb8reIageNj4Qh7ID9mIg.jpg",
     },
     {
       name: "Nagy Biofarm",
@@ -37,6 +38,8 @@ async function seed() {
       role: ERole.FARMER,
       location: "Kecskemét",
       bio: "Biotermékek szeretettel",
+      avatarUrl:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNtJpIX7LjyDba9UGNixifzF04tNYmnPBPIg&s",
     },
   ]);
 
@@ -61,26 +64,32 @@ async function seed() {
     {
       name: "Paradicsom",
       description: "Friss házi paradicsom",
+      category: EProductCategory.VEGETABLES,
       price: 500,
       stock: 30,
       farmerId: farmers[0]._id,
-      imageUrl: "https://kakaobab.com/cdn/shop/articles/sambiranogold-paradicsom_1e86b753-79e4-42b9-a99b-8f7b24db284f.jpg?v=1586249760",
+      imageUrl:
+        "https://kakaobab.com/cdn/shop/articles/sambiranogold-paradicsom_1e86b753-79e4-42b9-a99b-8f7b24db284f.jpg?v=1586249760",
     },
     {
       name: "Uborka",
       description: "Kertből frissen",
+      category: EProductCategory.VEGETABLES,
       price: 300,
       stock: 50,
       farmerId: farmers[0]._id,
-      imageUrl: "https://tudatosvasarlo.hu/wp-content/uploads/eric-prouzet-Ky6x9T8j128-unsplash-1.jpg",
+      imageUrl:
+        "https://tudatosvasarlo.hu/wp-content/uploads/eric-prouzet-Ky6x9T8j128-unsplash-1.jpg",
     },
     {
       name: "Alma",
+      category: EProductCategory.FRUITS,
       description: "Édes magyar alma",
       price: 400,
       stock: 20,
       farmerId: farmers[1]._id,
-      imageUrl: "https://gyogyszernelkul.com/wp-content/uploads/2017/11/tapanyagot-es-egeszseget-ad-zold-alma.jpg",
+      imageUrl:
+        "https://gyogyszernelkul.com/wp-content/uploads/2017/11/tapanyagot-es-egeszseget-ad-zold-alma.jpg",
     },
   ]);
 

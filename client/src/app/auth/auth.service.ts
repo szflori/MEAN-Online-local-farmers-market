@@ -1,12 +1,12 @@
-import axios from 'axios';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+
+import { api } from '../../services/api';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3333/app'; //TODO env
   private userSubject = new BehaviorSubject<any>(null);
   public user$ = this.userSubject.asObservable();
 
@@ -16,7 +16,7 @@ export class AuthService {
 
   async register(data: { name: string; email: string; password: string }) {
     try {
-      const res = await axios.post(`${this.apiUrl}/register`, data, {
+      const res = await api.post(`/register`, data, {
         withCredentials: true,
       });
       return res.data;
@@ -31,7 +31,7 @@ export class AuthService {
     password: string;
   }) {
     try {
-      const res = await axios.post(`${this.apiUrl}/register-farmer`, data, {
+      const res = await api.post(`/register-farmer`, data, {
         withCredentials: true,
       });
       return res.data;
@@ -42,8 +42,8 @@ export class AuthService {
 
   async login(data: { email: string; password: string }) {
     try {
-      const res = await axios.post(
-        `${this.apiUrl}/login`,
+      const res = await api.post(
+        `/login`,
         { username: data.email, password: data.password },
         {
           withCredentials: true,
@@ -58,7 +58,7 @@ export class AuthService {
 
   async checkSession() {
     try {
-      const res = await axios.get(`${this.apiUrl}/check-session`, {
+      const res = await api.get(`/check-session`, {
         withCredentials: true,
       });
       this.userSubject.next(res.data);
@@ -70,8 +70,8 @@ export class AuthService {
   }
 
   async logout() {
-    await axios.post(
-      `${this.apiUrl}/logout`,
+    await api.post(
+      `/logout`,
       {},
       {
         withCredentials: true,

@@ -2,12 +2,32 @@ import { Router, Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 
 import { Product } from "../model/product.schema";
+import passport from "passport";
+import { isFarmer } from "../middlewares/isFarmer";
 
 export const productsRoutes = (router: Router): Router => {
   // GET all products
   router.get("/", async (req: Request, res: Response) => {
     try {
-      const products = await Product.find();
+      const { category, farmerId, search } = req.query;
+      const filter: any = {};
+
+      if (category) {
+        filter.category = category;
+      }
+
+      if (farmerId) {
+        filter.farmerId = farmerId;
+      }
+
+      if (search) {
+        filter.$or = [
+          { name: { $regex: search, $options: "i" } },
+          { description: { $regex: search, $options: "i" } },
+        ];
+      }
+
+      const products = await Product.find(filter);
       res.json(products);
     } catch (err) {
       res.status(500).json({ message: "Failed to fetch products" });
@@ -32,6 +52,8 @@ export const productsRoutes = (router: Router): Router => {
   // POST new product
   router.post(
     "/",
+    passport.authenticate("session"),
+    isFarmer,
     body("name").isString().notEmpty(),
     body("price").isFloat({ gt: 0 }),
     body("stock").isInt({ min: 0 }),
@@ -71,6 +93,8 @@ export const productsRoutes = (router: Router): Router => {
   // PUT update product
   router.put(
     "/:id",
+    passport.authenticate("session"),
+    isFarmer,
     body("name").optional().isString().notEmpty(),
     body("price").optional().isFloat({ gt: 0 }),
     body("stock").optional().isInt({ min: 0 }),
@@ -89,17 +113,22 @@ export const productsRoutes = (router: Router): Router => {
           res.status(404).json({ message: "Product not found" });
           return;
         }
-        if (product.farmerId.toString() !== user._id.toString()) {
-          res
-            .status(403)
-            .json({ message: "Unauthorized to update this product" });
+
+        const isOwner = product.farmerId.toString() === user.id;
+        const isAdmin = user.role === "ADMIN";
+
+        if (!isOwner && !isAdmin) {
+          res.status(403).json({ message: "Unauthorized" });
           return;
         }
 
-        Object.assign(product, req.body);
-        const updatedProduct = await product.save();
+        const updated = await Product.findByIdAndUpdate(
+          req.params.id,
+          req.body,
+          { new: true }
+        );
 
-        res.json(updatedProduct);
+        res.json(updated);
       } catch (err) {
         res.status(500).json({ message: "Failed to update product" });
       }
@@ -107,28 +136,35 @@ export const productsRoutes = (router: Router): Router => {
   );
 
   // DELETE product
-  router.delete("/:id", async (req: Request, res: Response) => {
-    try {
-      const user = req.user as any;
-      const product = await Product.findById(req.params.id);
+  router.delete(
+    "/:id",
+    passport.authenticate("session"),
+    isFarmer,
+    async (req: Request, res: Response) => {
+      try {
+        const user = req.user as any;
+        const product = await Product.findById(req.params.id);
 
-      if (!product) {
-        res.status(404).json({ message: "Product not found" });
-        return;
-      }
-      if (product.farmerId.toString() !== user._id.toString()) {
-        res
-          .status(403)
-          .json({ message: "Unauthorized to delete this product" });
-        return;
-      }
+        if (!product) {
+          res.status(404).json({ message: "Product not found" });
+          return;
+        }
 
-      await product.deleteOne();
-      res.json({ message: "Product deleted" });
-    } catch (err) {
-      res.status(500).json({ message: "Failed to delete product" });
+        const isOwner = product.farmerId.toString() === user.id;
+        const isAdmin = user.role === "ADMIN";
+
+        if (!isOwner && !isAdmin) {
+          res.status(403).json({ message: "Unauthorized" });
+          return;
+        }
+
+        await product.deleteOne();
+        res.json({ message: "Product deleted" });
+      } catch (err) {
+        res.status(500).json({ message: "Failed to delete product" });
+      }
     }
-  });
+  );
 
   return router;
 };

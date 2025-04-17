@@ -1,0 +1,50 @@
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+
+  img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+
+  .details {
+    flex: 1;
+
+    .name {
+      font-weight: bold;
+    }
+
+    .price {
+      font-size: 14px;
+      color: gray;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      button {
+        min-width: 32px;
+      }
+    }
+  }
+
+  &.compact {
+    img {
+      display: none;
+    }
+
+    .price {
+      font-size: 12px;
+    }
+
+    .controls {
+      font-size: 12px;
+    }
+  }
+}
