@@ -1,13 +1,13 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
-  selector: 'app-header',
+  selector: 'app-user-header',
   standalone: false,
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
+  templateUrl: './user-header.component.html',
+  styleUrl: './user-header.component.scss',
 })
-export class HeaderComponent implements OnInit {
+export class UserHeaderComponent implements OnInit {
   @Output() menuToggle = new EventEmitter<void>();
   user: any = null;
 

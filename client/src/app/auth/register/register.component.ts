@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
 import { SuccessDialogComponent } from '../../shared/success-dialog/success-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ErrorDialogComponent } from '../../shared/error-dialog/error-dialog.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register',

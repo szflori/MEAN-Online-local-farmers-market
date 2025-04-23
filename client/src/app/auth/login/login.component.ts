@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
-import { AuthService } from '../auth.service';
 import { SuccessDialogComponent } from '../../shared/success-dialog/success-dialog.component';
 import { ErrorDialogComponent } from '../../shared/error-dialog/error-dialog.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -39,7 +39,15 @@ export class LoginComponent {
         })
         .afterClosed()
         .subscribe(() => {
-          this.router.navigate(['/']);
+          const user = this.auth.currentUser;
+
+          if (user?.role === 'ADMIN' || user?.role === 'FARMER') {
+            this.router.navigate(['/management']);
+          } else if (user?.role === 'USER') {
+            this.router.navigate(['/user']);
+          } else {
+            this.router.navigate(['/']);
+          }
         });
     } catch (err: any) {
       this.dialog.open(ErrorDialogComponent, {

@@ -21,7 +21,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './footer/footer.component';
 import { CartComponent } from './cart/cart.component';
-import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { AuthModule } from './auth/auth.module';
 import { CartDropdownComponent } from './cart/cart-dropdown/cart-dropdown.component';
@@ -45,13 +44,19 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { CartState } from '../store/cart.state';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { CartItemComponent } from './cart/cart-item/cart-item.component';
+import { AdminFarmerLayoutComponent } from './layouts/admin-farmer-layout/admin-farmer-layout.component';
+import { UserLayoutComponent } from './layouts/user-layout/user-layout.component';
+import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
+import { PublicHeaderComponent } from './layouts/public-layout/public-header/public-header.component';
+import { UserHeaderComponent } from './layouts/user-layout/user-header/user-header.component';
+import { AdminFarmerHeaderComponent } from './layouts/admin-farmer-layout/admin-farmer-header/admin-farmer-header.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FooterComponent,
     CartComponent,
-    HeaderComponent,
     HomeComponent,
     CartDropdownComponent,
     ProductsComponent,
@@ -63,6 +68,13 @@ import { CartItemComponent } from './cart/cart-item/cart-item.component';
     LoadingComponent,
     ProductCardComponent,
     CartItemComponent,
+    AdminFarmerLayoutComponent,
+    UserLayoutComponent,
+    PublicLayoutComponent,
+    PublicHeaderComponent,
+    UserHeaderComponent,
+    AdminFarmerHeaderComponent,
+    CheckoutComponent,
   ],
   imports: [
     NgxsModule.forRoot([CartState]),

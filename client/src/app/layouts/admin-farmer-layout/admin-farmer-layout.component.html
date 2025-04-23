@@ -1,0 +1,28 @@
+<mat-sidenav-container class="sidenav-layout">
+    <mat-sidenav #sidenav mode="over">
+        <div class="sidenav-header">
+            <div class="sidenav-header-top">
+                <h3 class="logo">🛒 Farmers Market</h3>
+
+                <button mat-icon-button (click)="sidenav.close()" aria-label="Bezárás">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <mat-nav-list>
+            <a mat-list-item routerLink="/dashboard">Dashboard</a>
+            <a mat-list-item routerLink="/products">Termékek</a>
+            <a mat-list-item routerLink="/farmers">Farmerek</a>
+
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <app-admin-farmer-header (menuToggle)="sidenav.toggle()"></app-admin-farmer-header>
+
+        <main class="main-content">
+            <router-outlet></router-outlet>
+        </main>
+    </mat-sidenav-content>
+</mat-sidenav-container>

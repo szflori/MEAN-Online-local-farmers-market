@@ -1,0 +1,22 @@
+<h2>Rendelés véglegesítése</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Teljes név</mat-label>
+        <input matInput formControlName="fullName" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Szállítási cím</mat-label>
+        <input matInput formControlName="address" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Telefonszám</mat-label>
+        <input matInput formControlName="phone" required />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+        Rendelés leadása
+    </button>
+</form>

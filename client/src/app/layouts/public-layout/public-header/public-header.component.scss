@@ -1,0 +1,45 @@
+.container {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    .logo {
+      font-weight: bold;
+      font-size: 1.3rem;
+      cursor: pointer;
+    }
+  }
+
+  .right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 18px;
+  }
+
+  .hide-on-mobile {
+    display: flex;
+
+    @media (max-width: 768px) {
+      display: none !important;
+    }
+  }
+
+  .show-on-mobile {
+    display: none;
+
+    @media (max-width: 768px) {
+      display: inline-flex;
+    }
+  }
+}

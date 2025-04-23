@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductsService } from '../products/products.service';
-import { FarmerService } from '../farmers/farmer.service';
+import { FarmerService } from '../services/farmer.service';
 import { Product } from '../../interfaces/product.interface';
+import { ProductsService } from '../services/products.service';
 
 interface Farmer {
   id: string;
@@ -29,6 +29,7 @@ export class HomeComponent implements OnInit {
   async ngOnInit() {
     try {
       this.farmers = await this.farmerService.getFarmers();
+      console.log(this.farmers)
     } catch (err: any) {
       this.error = err.message || 'Error loading farmers';
     } finally {

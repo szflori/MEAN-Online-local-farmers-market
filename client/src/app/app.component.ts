@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { LoadingService } from './shared/loading/loading.service';
 import { setupAxiosInterceptors } from './core/axios.interceptor';
 
-// TODO sidenav admin és farmer részére
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

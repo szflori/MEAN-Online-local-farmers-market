@@ -8,7 +8,7 @@
 
       <div class="cart-summary">
         <h3>Összesen: {{ totalPrice$ | async | currency:'HUF' }}</h3>
-        <button mat-raised-button color="primary">Megrendelés</button>
+        <a mat-raised-button color="primary" routerLink="/checkout">Megrendelés</a>
       </div>
     </ng-container>
   </ng-container>
