@@ -1,15 +1,12 @@
 import { Schema, model, Types } from "mongoose";
 
-const OrderItemSchema = new Schema(
+export const OrderItemSchema = new Schema(
   {
+    productId: { type: Types.ObjectId, ref: "Product", required: true },
     quantity: { type: Number, required: true },
     price: { type: Number, required: true },
-    orderId: { type: Types.ObjectId, ref: "Order", required: true },
-    productId: { type: Types.ObjectId, ref: "Product", required: true },
   },
-  {
-    collection: "order_items",
-  }
+  { _id: false }
 );
 
 export const OrderItem = model("OrderItem", OrderItemSchema);

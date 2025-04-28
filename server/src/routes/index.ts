@@ -7,6 +7,7 @@ import { productsRoutes } from "./products.routes";
 import { ordersRoutes } from "./orders.routes";
 import { farmersRoutes } from "./farmers.routes";
 import { usersRoutes } from "./users.routes";
+import { salesRoutes } from "./sales.routes";
 
 export const configureRoutes = (passport: PassportStatic): Router => {
   const router = express.Router();
@@ -20,6 +21,8 @@ export const configureRoutes = (passport: PassportStatic): Router => {
   router.use("/orders", ordersRoutes(express.Router()));
 
   router.use("/farmers", farmersRoutes(express.Router()));
+
+  router.use("/sales-report", salesRoutes(express.Router()));
 
   return router;
 };

@@ -1,11 +1,10 @@
 import { Router, Request, Response } from "express";
 import { User } from "../model/user.schema";
 import { body, validationResult } from "express-validator";
-import { isAuthenticated } from "../middlewares/isAuthenticated";
+import { isAdmin } from "../middlewares/isAdmin";
 
 export const usersRoutes = (router: Router): Router => {
-  // GET /users - csak admin
-  router.get("/", isAuthenticated, async (req: Request, res: Response) => {
+  router.get("/", isAdmin, async (req: Request, res: Response) => {
     const user = req.user as any;
     if (user.role !== "ADMIN") {
       res.status(403).json({ message: "Only admins can access all users." });
@@ -20,43 +19,29 @@ export const usersRoutes = (router: Router): Router => {
     }
   });
 
-  // GET /users/:id - saját profil vagy admin
-  router.get("/:id", isAuthenticated, async (req: Request, res: Response) => {
-    const user = req.user as any;
-
-    if (user.role !== "ADMIN" && user.id !== req.params.id) {
-      res.status(403).json({ message: "Unauthorized to view this user." });
-      return;
-    }
-
+  router.get("/:id", isAdmin, async (req: Request, res: Response) => {
     try {
-      const profile = await User.findById(req.params.id).select("-password");
-      if (!profile) {
+      const user = await User.findById(req.params.id).select("-password");
+      if (!user) {
         res.status(404).json({ message: "User not found" });
         return;
       }
-      res.json(profile);
+      res.json(user);
     } catch {
       res.status(500).json({ message: "Failed to fetch user" });
     }
   });
 
-  // PUT /users/:id - saját profil vagy admin
-  router.put(
+  router.patch(
     "/:id",
-    isAuthenticated,
+    isAdmin,
     body("name").optional().isString(),
-    body("email").optional().isEmail(),
-    body("location").optional().isString(),
+    body("email").optional().isEmail().withMessage("Invalid email format"),
+    body("address").optional().isString(),
     body("bio").optional().isString(),
+    body("avatarUrl").optional().isString(),
+    body("role").optional().isIn(["USER", "FARMER", "ADMIN"]),
     async (req: Request, res: Response) => {
-      const user = req.user as any;
-
-      if (user.role !== "ADMIN" && user.id !== req.params.id) {
-        res.status(403).json({ message: "Unauthorized to update this user." });
-        return;
-      }
-
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         res.status(400).json({ errors: errors.array() });
@@ -78,6 +63,23 @@ export const usersRoutes = (router: Router): Router => {
       }
     }
   );
+
+  router.delete("/:id", isAdmin, async (req: Request, res: Response) => {
+    try {
+      const user = await User.findById(req.params.id);
+
+      if (!user) {
+        res.status(404).json({ message: "User not found" });
+        return;
+      }
+
+      await user.deleteOne();
+
+      res.json({ message: "User deleted" });
+    } catch (err) {
+      res.status(500).json({ message: "Failed to delete user" });
+    }
+  });
 
   return router;
 };

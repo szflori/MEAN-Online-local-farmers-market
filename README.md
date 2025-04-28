@@ -1,7 +1,9 @@
 # ✨ Local Farmers' Market Online Platform ✨
 
 ## **Project Description**
-This project is a **MEAN stack** web application built using **Nx workspace** that provides an online platform for a local farmers' market. The system allows **farmers (sellers)** to upload their products, **customers** to place orders, and **guest viewers** to browse the marketplace offerings.
+Szerepkörök: eladók, vevők és vendégek.
+Csak a regisztrált felhasználók lehetnek eladók vagy vevők. A vendég felhasználók böngészhetik, milyen használt termékek érhetők el és megtekinthetik azok árait, de vásárlást nem kezdeményezhetnek. Az eladók feltölthetik használt termékeiket, de természetesen nem vásárolhatják meg a saját feltöltött termékeiket. Ha egy használt termék eladásra kerül, az inaktívvá válik a piactéren. Az eladók listázhatják, hogy melyik terméket milyen összegért sikerült értékesíteni, a vevők pedig láthatják korábbi vásárlásaikat.
+
 
 ## **Features**
 ### **1. User Roles**
@@ -20,7 +22,6 @@ This project is a **MEAN stack** web application built using **Nx workspace** th
 ## **Technology Stack**
 | Component | Technology |
 |-----------|------------|
-| **Monorepo Management** | Nx Workspace |
 | **Backend API** | Node.js + Express.js + TypeScript |
 | **Frontend** | Angular 2+ + TypeScript |
 | **Database** | MongoDB + Mongoose |

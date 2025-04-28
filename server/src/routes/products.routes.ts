@@ -1,12 +1,11 @@
 import { Router, Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 
-import { Product } from "../model/product.schema";
+import { EProductCategory, Product } from "../model/product.schema";
 import passport from "passport";
 import { isFarmer } from "../middlewares/isFarmer";
 
 export const productsRoutes = (router: Router): Router => {
-  // GET all products
   router.get("/", async (req: Request, res: Response) => {
     try {
       const { category, farmerId, search } = req.query;
@@ -49,14 +48,16 @@ export const productsRoutes = (router: Router): Router => {
     }
   });
 
-  // POST new product
   router.post(
     "/",
     passport.authenticate("session"),
     isFarmer,
     body("name").isString().notEmpty(),
+    body("category").isIn(Object.values(EProductCategory)),
+    body("description").optional().isString(),
     body("price").isFloat({ gt: 0 }),
     body("stock").isInt({ min: 0 }),
+    body("imageUrl").optional().isString(),
     async (req: Request, res: Response) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -66,10 +67,6 @@ export const productsRoutes = (router: Router): Router => {
 
       try {
         const user = req.user as any;
-        if (user.role !== "FARMER") {
-          res.status(403).json({ message: "Only farmers can create products" });
-          return;
-        }
 
         const { name, description, price, stock, imageUrl } = req.body;
 
@@ -90,14 +87,16 @@ export const productsRoutes = (router: Router): Router => {
     }
   );
 
-  // PUT update product
-  router.put(
+  router.patch(
     "/:id",
     passport.authenticate("session"),
     isFarmer,
     body("name").optional().isString().notEmpty(),
+    body("category").optional().isIn(Object.values(EProductCategory)),
+    body("description").optional().isString(),
     body("price").optional().isFloat({ gt: 0 }),
     body("stock").optional().isInt({ min: 0 }),
+    body("imageUrl").optional().isString(),
     async (req: Request, res: Response) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {

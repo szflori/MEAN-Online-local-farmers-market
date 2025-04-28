@@ -19,7 +19,6 @@ import { MatDividerModule } from '@angular/material/divider';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FooterComponent } from './footer/footer.component';
 import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
 import { AuthModule } from './auth/auth.module';
@@ -55,7 +54,6 @@ import { CheckoutComponent } from './checkout/checkout.component';
 @NgModule({
   declarations: [
     AppComponent,
-    FooterComponent,
     CartComponent,
     HomeComponent,
     CartDropdownComponent,
