@@ -17,6 +17,9 @@ import { UserLayoutComponent } from './layouts/user-layout/user-layout.component
 import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
 import { RoleGuard } from './guards/role.guard';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { UsersComponent } from './pages/users-mgmt/users/users.component';
+import { UserComponent } from './pages/users-mgmt/user/user.component';
+import { UserEditComponent } from './pages/users-mgmt/user-edit/user-edit.component';
 
 // TODO Users table
 const routes: Routes = [
@@ -39,7 +42,7 @@ const routes: Routes = [
   {
     path: 'app',
     component: UserLayoutComponent,
-    canActivate: [AuthGuard, RoleGuard],
+    canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: '', pathMatch: 'full' },
       {
@@ -52,8 +55,13 @@ const routes: Routes = [
   {
     path: 'management',
     component: AdminFarmerLayoutComponent,
-    canActivate: [AuthGuard, RoleGuard],
-    children: [{ path: '', redirectTo: 'dashboard', pathMatch: 'full' }],
+    canActivate: [AuthGuard],
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'users', component: UsersComponent },
+      { path: 'users/:id', component: UserComponent },
+      { path: 'users/:id/edit', component: UserEditComponent },
+    ],
   },
 ];
 

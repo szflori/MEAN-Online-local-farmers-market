@@ -50,6 +50,18 @@ import { PublicHeaderComponent } from './layouts/public-layout/public-header/pub
 import { UserHeaderComponent } from './layouts/user-layout/user-header/user-header.component';
 import { AdminFarmerHeaderComponent } from './layouts/admin-farmer-layout/admin-farmer-header/admin-farmer-header.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { UsersComponent } from './pages/users-mgmt/users/users.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { UserComponent } from './pages/users-mgmt/user/user.component';
+import { UserEditComponent } from './pages/users-mgmt/user-edit/user-edit.component';
+import { ProductsMgmtComponent } from './pages/products/products-mgmt/products-mgmt.component';
+import { ProductShowComponent } from './pages/products/product-show/product-show.component';
+import { ProductEditComponent } from './pages/products/product-edit/product-edit.component';
+import { OrdersMgmtComponent } from './pages/orders/orders-mgmt/orders-mgmt.component';
+import { OrdersComponent } from './pages/orders/orders/orders.component';
+import { OrderShowComponent } from './pages/orders/order-show/order-show.component';
+import { OrderEditComponent } from './pages/orders/order-edit/order-edit.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +85,16 @@ import { CheckoutComponent } from './checkout/checkout.component';
     UserHeaderComponent,
     AdminFarmerHeaderComponent,
     CheckoutComponent,
+    UsersComponent,
+    UserComponent,
+    UserEditComponent,
+    ProductsMgmtComponent,
+    ProductShowComponent,
+    ProductEditComponent,
+    OrdersMgmtComponent,
+    OrdersComponent,
+    OrderShowComponent,
+    OrderEditComponent,
   ],
   imports: [
     NgxsModule.forRoot([CartState]),
@@ -103,6 +125,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
     MatSliderModule,
     MatProgressSpinnerModule,
     MatBadgeModule,
+    MatTableModule,
+    MatProgressBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

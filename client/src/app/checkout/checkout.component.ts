@@ -32,10 +32,6 @@ export class CheckoutComponent {
 
       // elküldjük a backendnek az NGXS store-ból a kosarat
       const items = this.store.selectSnapshot(CartState.items);
-
-      this.orderService.placeOrder({ items, ...orderData }).subscribe(() => {
-        // sikeres rendelés után navigálás / értesítés
-      });
     }
   }
 }

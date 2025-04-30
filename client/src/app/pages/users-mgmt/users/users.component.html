@@ -1,0 +1,35 @@
+<h2>Felhasználók</h2>
+
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+<mat-table [dataSource]="users" *ngIf="!loading && users.length > 0" class="mat-elevation-z2">
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Név </mat-header-cell>
+        <mat-cell *matCellDef="let user">
+            <div class="user-cell">
+                <img *ngIf="user.avatarUrl" [src]="user.avatarUrl" class="avatar" alt="avatar" />
+                <mat-icon *ngIf="!user.avatarUrl">person</mat-icon>
+                <a mat-button [routerLink]="['/management/users', user.id]">{{ user.name }}</a>
+            </div>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{ user.email }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="role">
+        <mat-header-cell *matHeaderCellDef> Szerepkör </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{ user.role }} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+<div *ngIf="!loading && users.length === 0" class="empty-message">
+    Nincs megjeleníthető felhasználó.
+</div>
+
+<mat-error *ngIf="error">{{ error }}</mat-error>

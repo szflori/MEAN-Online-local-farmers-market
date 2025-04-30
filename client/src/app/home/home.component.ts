@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
     }
 
     try {
-      this.products = await this.productsService.getProducts();
+      this.products = await this.productsService.getList();
     } catch (err: any) {
       this.error = err.message || 'Could not load products';
     } finally {

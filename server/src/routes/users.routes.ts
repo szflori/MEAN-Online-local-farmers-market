@@ -5,12 +5,6 @@ import { isAdmin } from "../middlewares/isAdmin";
 
 export const usersRoutes = (router: Router): Router => {
   router.get("/", isAdmin, async (req: Request, res: Response) => {
-    const user = req.user as any;
-    if (user.role !== "ADMIN") {
-      res.status(403).json({ message: "Only admins can access all users." });
-      return;
-    }
-
     try {
       const users = await User.find().select("-password");
       res.json(users);

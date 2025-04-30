@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { CrudService } from '../shared/crud.service';
-import { Product } from '../../interfaces/product.interface';
+import { User } from '../../interfaces/user.interface';
 import { API_PATH } from '../../services/api';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProductsService extends CrudService<Product> {
+export class UsersService extends CrudService<User> {
   constructor() {
-    super(API_PATH.products);
+    super(API_PATH.users);
   }
 }
