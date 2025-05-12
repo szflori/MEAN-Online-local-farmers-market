@@ -1,9 +1,8 @@
 # ✨ Local Farmers' Market Online Platform ✨
 
 ## **Project Description**
-Szerepkörök: eladók, vevők és vendégek.
-Csak a regisztrált felhasználók lehetnek eladók vagy vevők. A vendég felhasználók böngészhetik, milyen használt termékek érhetők el és megtekinthetik azok árait, de vásárlást nem kezdeményezhetnek. Az eladók feltölthetik használt termékeiket, de természetesen nem vásárolhatják meg a saját feltöltött termékeiket. Ha egy használt termék eladásra kerül, az inaktívvá válik a piactéren. Az eladók listázhatják, hogy melyik terméket milyen összegért sikerült értékesíteni, a vevők pedig láthatják korábbi vásárlásaikat.
-
+Szerepkörök: gazdálkodók (eladók), vásárlók és vendég nézők.
+A gazdálkodók hozzáadhatják termékeiket, kézműves áruikat és az előrendelés vagy kiszállítás elérhetőségét. Kezelhetik a készletet, beállíthatják az árakat és kínálhatnak szezonális promóciókat. A vásárlók regisztrálhatnak rendelések leadására, kedvenc eladóikra feliratkozhatnak aktualitások azonnali megtekintéséért és részt vehetnek a közösség által támogatott mezőgazdasági (CSA) programokban. A vendég nézők böngészhetik a piac kínálatát, de regisztrálniuk kell a vásárláshoz.
 
 ## **Features**
 ### **1. User Roles**

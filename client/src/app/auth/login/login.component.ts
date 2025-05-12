@@ -39,12 +39,12 @@ export class LoginComponent {
         })
         .afterClosed()
         .subscribe(() => {
-          const user = this.auth.currentUser;
+          const user = response;
 
           if (user?.role === 'ADMIN' || user?.role === 'FARMER') {
             this.router.navigate(['/management']);
           } else if (user?.role === 'USER') {
-            this.router.navigate(['/user']);
+            this.router.navigate(['/app']);
           } else {
             this.router.navigate(['/']);
           }

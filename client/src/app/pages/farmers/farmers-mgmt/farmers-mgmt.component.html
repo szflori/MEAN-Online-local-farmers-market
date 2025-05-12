@@ -1,0 +1,32 @@
+<h2>Farmers</h2>
+
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+<mat-table [dataSource]="farmers" *ngIf="!loading && farmers.length > 0" class="mat-elevation-z2">
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Név </mat-header-cell>
+        <mat-cell *matCellDef="let farmer">
+            <div class="farmer-cell">
+                <img *ngIf="farmer.avatarUrl" [src]="farmer.avatarUrl" class="avatar" alt="avatar" />
+                <mat-icon *ngIf="!farmer.avatarUrl">person</mat-icon>
+                <a mat-button [routerLink]="['/management/farmers', farmer.id]">{{ farmer.name }}</a>
+            </div>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+        <mat-cell *matCellDef="let farmer"> {{ farmer.email }} </mat-cell>
+    </ng-container>
+
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+<div *ngIf="!loading && farmers.length === 0" class="empty-message">
+    Nincs megjeleníthető farmer.
+</div>
+
+<mat-error *ngIf="error">{{ error }}</mat-error>

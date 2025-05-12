@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FarmerService } from '../services/farmer.service';
 import { Product } from '../../interfaces/product.interface';
 import { ProductsService } from '../services/products.service';
+import { AuthService } from '../services/auth.service';
+import { User } from '../../interfaces/user.interface';
 
 interface Farmer {
   id: string;
@@ -21,15 +23,22 @@ export class HomeComponent implements OnInit {
   loading = true;
   error: string | null = null;
 
+  user: User | null = null;
+
   constructor(
     private farmerService: FarmerService,
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private authService: AuthService
   ) {}
+
+  get isAuthed(): boolean {
+    return !!this.user;
+  }
 
   async ngOnInit() {
     try {
       this.farmers = await this.farmerService.getFarmers();
-      console.log(this.farmers)
+      console.log(this.farmers);
     } catch (err: any) {
       this.error = err.message || 'Error loading farmers';
     } finally {

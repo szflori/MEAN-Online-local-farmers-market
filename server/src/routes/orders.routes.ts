@@ -49,7 +49,6 @@ export const ordersRoutes = (router: Router): Router => {
     "/",
     isAuthenticated,
     body("items").isArray({ min: 1 }),
-    body("fullName").isString().notEmpty(),
     body("address").isString().notEmpty(),
     body("phone").isString().notEmpty(),
     async (req: Request, res: Response) => {

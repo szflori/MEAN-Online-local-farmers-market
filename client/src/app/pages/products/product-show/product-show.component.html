@@ -1,1 +1,26 @@
-<p>product-show works!</p>
+<mat-card *ngIf="product && !loading" class="product-card">
+    <mat-card-header>
+        <div mat-card-avatar class="product-avatar">
+            <img [src]="product.imageUrl || '/assets/default-avatar.png'" alt="Avatar" />
+        </div>
+        <mat-card-title>{{ product.name }}</mat-card-title>
+        <mat-card-subtitle>
+            <a mat-button [routerLink]="['/management/farmers', product.farmer.id]">{{ product.farmer.name }}</a>
+        </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+        <p><strong>Kategória:</strong> {{ product.category }}</p>
+        <p><strong>Leírás:</strong> {{ product.description || '-' }}</p>
+        <p><strong>Készlet:</strong> {{ product.stock || '-' }}</p>
+        <p><strong>Ár:</strong> {{ product.price || '-' }}</p>
+    </mat-card-content>
+
+    <mat-card-actions class="actions">
+        <button mat-stroked-button color="primary" (click)="editProduct()">Szerkesztés</button>
+        <button mat-raised-button color="warn" (click)="deleteProduct()">Törlés</button>
+    </mat-card-actions>
+</mat-card>
+
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+<mat-error *ngIf="error">{{ error }}</mat-error>

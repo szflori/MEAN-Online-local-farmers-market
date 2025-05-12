@@ -1,1 +1,51 @@
-<p>orders-mgmt works!</p>
+<h2>Rendelések</h2>
+
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+<mat-table [dataSource]="orders" *ngIf="!loading && orders.length > 0" class="mat-elevation-z2">
+    <ng-container matColumnDef="user">
+        <mat-header-cell *matHeaderCellDef> Felhasználó </mat-header-cell>
+        <mat-cell *matCellDef="let order">
+            <div class="order-cell">
+                <img *ngIf="order.user.avatarUrl" [src]="order.user.avatarUrl" class="avatar" alt="avatar" />
+                <mat-icon *ngIf="!order.user.avatarUrl">person</mat-icon>
+                <a mat-button [routerLink]="['/management/users', order.user.id]">{{ order.user.name }}</a>
+            </div>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="farmer">
+        <mat-header-cell *matHeaderCellDef> Farmer </mat-header-cell>
+        <mat-cell *matCellDef="let order">
+            <div class="order-cell">
+                <img *ngIf="order.farmer.avatarUrl" [src]="order.farmer.avatarUrl" class="avatar" alt="avatar" />
+                <mat-icon *ngIf="!order.farmer.avatarUrl">person</mat-icon>
+                <a mat-button [routerLink]="['/management/farmers', order.farmer.id]">{{ order.farmer.name }}</a>
+            </div>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef> Státusz </mat-header-cell>
+        <mat-cell *matCellDef="let order"> {{ order.status }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="total">
+        <mat-header-cell *matHeaderCellDef> Összeg </mat-header-cell>
+        <mat-cell *matCellDef="let order"> {{ order.total }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+        <mat-header-cell *matHeaderCellDef> Dátum </mat-header-cell>
+        <mat-cell *matCellDef="let order"> {{ order.createdAt }} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+<div *ngIf="!loading && orders.length === 0" class="empty-message">
+    Nincs megjeleníthető rendelés.
+</div>
+
+<mat-error *ngIf="error">{{ error }}</mat-error>

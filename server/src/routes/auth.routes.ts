@@ -92,7 +92,7 @@ export const authRoutes = (
         return;
       }
 
-      res.status(200).json({ id: user._id, name: user.name });
+      res.status(200).json({ id: user._id, name: user.name, role: user.role });
       return;
     }
     res.status(401).json({ message: "Not authenticated" });

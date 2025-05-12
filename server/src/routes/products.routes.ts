@@ -26,8 +26,20 @@ export const productsRoutes = (router: Router): Router => {
         ];
       }
 
-      const products = await Product.find(filter);
-      res.json(products);
+      const products = await Product.find(filter)
+        .populate("farmerId", "name avatarUrl")
+        .lean();
+
+      const formatted = products.map((product: any) => ({
+        farmer: {
+          id: product.farmerId._id.toString(),
+          name: product.farmerId.name,
+          avatarUrl: product.farmerId.avatarUrl,
+        },
+        ...product,
+      }));
+
+      res.json(formatted);
     } catch (err) {
       res.status(500).json({ message: "Failed to fetch products" });
     }
@@ -36,13 +48,22 @@ export const productsRoutes = (router: Router): Router => {
   // GET product by ID
   router.get("/:id", async (req: Request, res: Response) => {
     try {
-      const product = await Product.findById(req.params.id);
+      const product: any = await Product.findById(req.params.id)
+        .populate("farmerId", "name avatarUrl")
+        .lean();
       if (!product) {
         res.status(404).json({ message: "Product not found" });
         return;
       }
 
-      res.json(product);
+      res.json({
+        farmer: {
+          id: product.farmerId._id.toString(),
+          name: product.farmerId.name,
+          avatarUrl: product.farmerId.avatarUrl,
+        },
+        ...product,
+      });
     } catch (err) {
       res.status(500).json({ message: "Error retrieving product" });
     }

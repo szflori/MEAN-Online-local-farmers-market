@@ -11,10 +11,14 @@ import { Product } from '../../../interfaces/product.interface';
   styleUrl: './product-card.component.scss',
 })
 export class ProductCardComponent {
-  @Input()
-  product!: Product;
+  @Input({ required: true }) product!: any;
+  @Input({ required: true }) isAuthed!: boolean;
 
   constructor(private store: Store) {}
+
+  get isVisible(): boolean {
+    return this.isAuthed;
+  }
 
   addToCart() {
     const item: CartItem = {

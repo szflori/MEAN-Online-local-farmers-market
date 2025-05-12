@@ -1,1 +1,51 @@
-<p>products-mgmt works!</p>
+<h2>Termékek</h2>
+
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+<mat-table [dataSource]="products" *ngIf="!loading && products.length > 0" class="mat-elevation-z2">
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Név </mat-header-cell>
+        <mat-cell *matCellDef="let product">
+            <div class="product-cell">
+                <img *ngIf="product.imageUrl" [src]="product.imageUrl" class="photo" alt="photo" />
+                <mat-icon *ngIf="!product.imageUrl">package_2</mat-icon>
+                <a mat-button [routerLink]="['/management/products', product.id]">{{ product.name }}</a>
+            </div>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="farmer">
+        <mat-header-cell *matHeaderCellDef> Farmer </mat-header-cell>
+        <mat-cell *matCellDef="let product">
+            <div class="product-cell">
+                <img *ngIf="product.farmer.avatarUrl" [src]="product.farmer.avatarUrl" class="photo" alt="avatar" />
+                <mat-icon *ngIf="!product.farmer.avatarUrl">person</mat-icon>
+                <a mat-button [routerLink]="['/management/farmers', product.farmer.id]">{{ product.farmer.name }}</a>
+            </div>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="category">
+        <mat-header-cell *matHeaderCellDef> Kategória </mat-header-cell>
+        <mat-cell *matCellDef="let product"> {{ product.category }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="stock">
+        <mat-header-cell *matHeaderCellDef> Készlet </mat-header-cell>
+        <mat-cell *matCellDef="let product"> {{ product.stock }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+        <mat-header-cell *matHeaderCellDef> Ár </mat-header-cell>
+        <mat-cell *matCellDef="let product"> {{ product.price }} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+<div *ngIf="!loading && products.length === 0" class="empty-message">
+    Nincs megjeleníthető termék.
+</div>
+
+<mat-error *ngIf="error">{{ error }}</mat-error>

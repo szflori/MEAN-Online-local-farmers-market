@@ -1,26 +1,26 @@
 <mat-toolbar color="primary" class="container">
-    <div class="left">
-      <button mat-icon-button (click)="menuToggle.emit()" aria-label="menu">
-        <mat-icon>menu</mat-icon>
+  <div class="left">
+    <button mat-icon-button (click)="menuToggle.emit()" aria-label="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+
+  <div class="center">
+    <span class="logo" routerLink="/app">🛒 Farmers Market</span>
+  </div>
+
+  <nav class="right">
+    <app-cart-dropdown></app-cart-dropdown>
+
+    <ng-container>
+      <button mat-button [matMenuTriggerFor]="profileMenu">
+        <mat-icon>account_circle</mat-icon>
+        {{ user.name }}
       </button>
-    </div>
-  
-    <div class="center">
-      <span class="logo" routerLink="/">🛒 Farmers Market</span>
-    </div>
-  
-    <nav class="right">
-      <app-cart-dropdown></app-cart-dropdown>
-  
-      <ng-container>
-        <button mat-button [matMenuTriggerFor]="profileMenu">
-          <mat-icon>account_circle</mat-icon>
-          {{ user.name }}
-        </button>
-        <mat-menu #profileMenu="matMenu">
-          <button mat-menu-item routerLink="/profile">Profile</button>
-          <button mat-menu-item (click)="logout()">Logout</button>
-        </mat-menu>
-      </ng-container>
-    </nav>
-  </mat-toolbar>
+      <mat-menu #profileMenu="matMenu">
+        <button mat-menu-item routerLink="/app/profile">Profile</button>
+        <button mat-menu-item (click)="logout()">Logout</button>
+      </mat-menu>
+    </ng-container>
+  </nav>
+</mat-toolbar>

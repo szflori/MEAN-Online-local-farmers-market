@@ -62,6 +62,10 @@ import { OrdersMgmtComponent } from './pages/orders/orders-mgmt/orders-mgmt.comp
 import { OrdersComponent } from './pages/orders/orders/orders.component';
 import { OrderShowComponent } from './pages/orders/order-show/order-show.component';
 import { OrderEditComponent } from './pages/orders/order-edit/order-edit.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { FarmersMgmtComponent } from './pages/farmers/farmers-mgmt/farmers-mgmt.component';
+import { FarmerShowComponent } from './pages/farmers/farmer-show/farmer-show.component';
+import { FarmerEditComponent } from './pages/farmers/farmer-edit/farmer-edit.component';
 
 @NgModule({
   declarations: [
@@ -95,6 +99,10 @@ import { OrderEditComponent } from './pages/orders/order-edit/order-edit.compone
     OrdersComponent,
     OrderShowComponent,
     OrderEditComponent,
+    DashboardComponent,
+    FarmersMgmtComponent,
+    FarmerShowComponent,
+    FarmerEditComponent,
   ],
   imports: [
     NgxsModule.forRoot([CartState]),
