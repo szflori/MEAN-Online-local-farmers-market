@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import { ERole, User } from "./model/user.schema";
 import { EProductCategory, Product } from "./model/product.schema";
+import { Order } from "./model/order.schema";
 
 dotenv.config();
 
@@ -44,7 +45,7 @@ async function seed() {
   ]);
 
   // Felhasználó
-  await User.create({
+  const user = await User.create({
     name: "Teszt Felhasználó",
     email: "user@example.com",
     password: hashedPassword,
@@ -52,7 +53,7 @@ async function seed() {
   });
 
   // Admin
-  await User.create({
+  const admin = await User.create({
     name: "Admin Felhasználó",
     email: "admin@example.com",
     password: hashedPassword,
@@ -60,7 +61,7 @@ async function seed() {
   });
 
   // Termékek
-  await Product.insertMany([
+  const products = await Product.insertMany([
     {
       name: "Paradicsom",
       description: "Friss házi paradicsom",
@@ -92,6 +93,28 @@ async function seed() {
         "https://gyogyszernelkul.com/wp-content/uploads/2017/11/tapanyagot-es-egeszseget-ad-zold-alma.jpg",
     },
   ]);
+
+  await Order.create({
+    userId: user._id,
+    farmerId: farmers[0]._id,
+    items: [
+      {
+        productId: products[0]._id,
+        quantity: 2,
+        price: 2 * products[0].price,
+      },
+      {
+        productId: products[1]._id,
+        quantity: 2,
+        price: 2 * products[1].price,
+      },
+    ],
+    total: 2 * products[0].price + 2 * products[1].price,
+    status: "COMPLETED",
+    address: user.address || "6724 Szeged Asd 1/C",
+    phone: "0612345678",
+    createdAt: new Date(),
+  });
 
   console.log("✅ Dummy adatok betöltve!");
   await mongoose.disconnect();
