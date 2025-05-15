@@ -25,9 +25,11 @@ export class CrudService<T> {
     }
   }
 
-  async getOne(id: string): Promise<T & { id: string }> {
+  async getOne<T>(id: string): Promise<T & { id: string }> {
     try {
-      const { data } = await api.get(`${this.resourcePath}/${id}`);
+      const { data } = await api.get<T & { _id: string }>(
+        `${this.resourcePath}/${id}`
+      );
       return { id: data._id, ...data };
     } catch (err: any) {
       throw err.response?.data || { message: `Failed to load item` };

@@ -11,11 +11,12 @@ import { Order } from '../../../../interfaces/order.interface';
 export class OrdersMgmtComponent implements OnInit {
   orders: Order[] = [];
   displayedColumns: string[] = [
-    'user',
-    'farmer',
-    'status',
-    'total',
+    'orderNumber',
     'createdAt',
+    'status',
+    'user',
+    'total',
+    'farmer',
   ];
 
   loading = true;

@@ -3,6 +3,18 @@
 <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 
 <mat-table [dataSource]="orders" *ngIf="!loading && orders.length > 0" class="mat-elevation-z2">
+    <ng-container matColumnDef="orderNumber">
+        <mat-header-cell *matHeaderCellDef> Rendelési azonosító </mat-header-cell>
+        <mat-cell *matCellDef="let order">
+            <a mat-button [routerLink]="['/management/orders', order._id]">{{ order.orderNumber }}</a>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+        <mat-header-cell *matHeaderCellDef> Dátum </mat-header-cell>
+        <mat-cell *matCellDef="let order"> {{ order.createdAt }} </mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="user">
         <mat-header-cell *matHeaderCellDef> Felhasználó </mat-header-cell>
         <mat-cell *matCellDef="let order">
@@ -33,11 +45,6 @@
     <ng-container matColumnDef="total">
         <mat-header-cell *matHeaderCellDef> Összeg </mat-header-cell>
         <mat-cell *matCellDef="let order"> {{ order.total }} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="createdAt">
-        <mat-header-cell *matHeaderCellDef> Dátum </mat-header-cell>
-        <mat-cell *matCellDef="let order"> {{ order.createdAt }} </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

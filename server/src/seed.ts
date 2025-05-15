@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import { ERole, User } from "./model/user.schema";
 import { EProductCategory, Product } from "./model/product.schema";
@@ -16,9 +15,11 @@ async function seed() {
   // Töröljük a meglévő adatokat
   await User.deleteMany({});
   await Product.deleteMany({});
+  await Order.deleteMany({});
 
   // Hashed jelszó
-  const hashedPassword = await bcrypt.hash("asdASD123", 10);
+  const hashedPassword =
+    "$2b$10$fn.zXLR4GHE0GrNATgPYWukfht..vCaQo..LPtHnvB.hcxoRfW8Be";
 
   // Farmerek
   const farmers = await User.insertMany([
@@ -48,15 +49,15 @@ async function seed() {
   const user = await User.create({
     name: "Teszt Felhasználó",
     email: "user@example.com",
-    password: hashedPassword,
+    password: "asdASD123",
     role: ERole.USER,
   });
 
   // Admin
-  const admin = await User.create({
+  await User.create({
     name: "Admin Felhasználó",
     email: "admin@example.com",
-    password: hashedPassword,
+    password: "asdASD123",
     role: ERole.ADMIN,
   });
 
@@ -101,12 +102,12 @@ async function seed() {
       {
         productId: products[0]._id,
         quantity: 2,
-        price: 2 * products[0].price,
+        price: products[0].price,
       },
       {
         productId: products[1]._id,
         quantity: 2,
-        price: 2 * products[1].price,
+        price: products[1].price,
       },
     ],
     total: 2 * products[0].price + 2 * products[1].price,

@@ -29,7 +29,7 @@ export class FarmerEditComponent implements OnInit {
 
   async loadUser() {
     try {
-      const user = await this.usersService.getOne(this.userId);
+      const user = await this.usersService.getOne<any>(this.userId);
       this.form = this.fb.group({
         name: [user.name, Validators.required],
         address: [user.address || ''],

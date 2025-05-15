@@ -1,1 +1,73 @@
-<p>order-edit works!</p>
+<mat-card *ngIf="order && form">
+    <mat-card-title>Rendelés szerkesztése ({{ order.orderNumber }})</mat-card-title>
+
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="order-form">
+        <mat-form-field appearance="fill" *ngIf="canEdit('status')">
+            <mat-label>Státusz</mat-label>
+            <mat-select formControlName="status">
+                <mat-option *ngFor="let s of ['PENDING','PROCESSING','SHIPPED','COMPLETED','CANCELLED']" [value]="s">
+                    {{ s }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+
+        <h3>Termékek</h3>
+
+        <mat-list>
+            <mat-list-item *ngFor="let item of order.items" class="list">
+                <div class="item">
+                    <div class="item-details">
+                        <img [src]="item.imageUrl" width="32" height="32" class="avatar" />
+                        <strong>{{ item.name }}</strong> – {{ item.category }}<br />
+                        <div class="item-price">
+                            <span> {{item.quantity }} × {{ item.price | currency: 'HUF' }}</span>
+
+                            <span>
+                                {{item.quantity * item.price | currency: 'HUF'}}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <button mat-icon-button color="primary" (click)="openQuantityDialog(item)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+
+                        <button mat-icon-button color="warn" aria-label="Törlés" (click)="removeItem(item.productId)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </mat-list-item>
+        </mat-list>
+
+        <button mat-stroked-button color="primary" (click)="openAddProductDialog()">
+            Új termék hozzáadása
+        </button>
+
+        <h3>Rendelés adatok</h3>
+        <mat-form-field appearance="fill" *ngIf="canEdit('address')">
+            <mat-label>Cím</mat-label>
+            <input matInput formControlName="address" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" *ngIf="canEdit('phone')">
+            <mat-label>Telefonszám</mat-label>
+            <input matInput formControlName="phone" />
+        </mat-form-field>
+
+        <div class="actions">
+            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+                Mentés
+            </button>
+            <button mat-button type="button" routerLink="/management/orders/{{ order.id }}">Mégse</button>
+        </div>
+    </form>
+
+</mat-card>
+
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+<mat-error *ngIf="error">{{ error }}</mat-error>

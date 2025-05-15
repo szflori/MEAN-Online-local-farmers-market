@@ -29,7 +29,7 @@ export class ProductEditComponent implements OnInit {
 
   async loadProduct() {
     try {
-      const product = await this.productsService.getOne(this.productId);
+      const product = await this.productsService.getOne<any>(this.productId);
       this.form = this.fb.group({
         name: [product.name, Validators.required],
         category: [product.category, Validators.required],

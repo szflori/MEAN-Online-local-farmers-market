@@ -1,1 +1,52 @@
-<p>order-show works!</p>
+<mat-card *ngIf="order && !loading">
+    <mat-card-title>Rendelés: {{ order.orderNumber }}</mat-card-title>
+    <mat-card-subtitle>Státusz: {{ order.status }}</mat-card-subtitle>
+
+    <mat-divider></mat-divider>
+
+    <h3>Termékek</h3>
+    <mat-list>
+        <mat-list-item *ngFor="let item of order.items" class="list">
+            <div class="item-details">
+                <img [src]="item.imageUrl" width="32" height="32" class="avatar" />
+                <strong>{{ item.name }}</strong> – {{ item.category }}<br />
+                <div class="item-price">
+                    <span> {{item.quantity }} × {{ item.price | currency: 'HUF' }}</span>
+                    <span>
+                        {{item.quantity * item.price | currency: 'HUF'}}
+                    </span>
+                </div>
+            </div>
+        </mat-list-item>
+    </mat-list>
+
+    <div class="total">
+        <p><strong>Összeg:</strong></p>
+        <p>{{ order.total | currency: 'HUF' }}</p>
+    </div>
+
+    <h3>Rendelés adatai</h3>
+    <p><strong>Szállítási cím:</strong> {{ order.address }}</p>
+    <p><strong>Telefonszám:</strong> {{ order.phone }}</p>
+    <p><strong>Dátum:</strong> {{ order.createdAt | date: 'medium' }}</p>
+
+    <h3>Vásárló</h3>
+    <p>
+        <img [src]="order.user.avatarUrl" width="32" height="32" class="avatar" />
+        {{ order.user.name }}
+    </p>
+
+    <h3>Eladó (gazda)</h3>
+    <p>
+        <img [src]="order.farmer.avatarUrl" width="32" height="32" class="avatar" />
+        {{ order.farmer.name }}
+    </p>
+
+    <mat-card-actions class="actions">
+        <button mat-stroked-button color="primary" (click)="editProduct()">Szerkesztés</button>
+        <button mat-raised-button color="warn" (click)="deleteProduct()">Törlés</button>
+    </mat-card-actions>
+</mat-card>
+
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+<mat-error *ngIf="error">{{ error }}</mat-error>

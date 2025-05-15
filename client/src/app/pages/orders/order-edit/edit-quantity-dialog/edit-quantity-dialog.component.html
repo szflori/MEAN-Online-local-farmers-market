@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Mennyiség módosítása</h1>
+<div mat-dialog-content [formGroup]="form">
+    <p><strong>{{ data.name }}</strong></p>
+    <mat-form-field appearance="fill">
+        <mat-label>Mennyiség</mat-label>
+        <input matInput type="number" formControlName="quantity" />
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="dialogRef.close()">Mégse</button>
+    <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid">Mentés</button>
+</div>

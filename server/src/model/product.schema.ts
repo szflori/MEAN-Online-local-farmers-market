@@ -29,6 +29,8 @@ const ProductSchema = new Schema(
     imageUrl: { type: String, required: false },
     createdAt: { type: Date, default: Date.now },
     farmerId: { type: Types.ObjectId, ref: "User", required: true },
+    isPreorder: { type: Boolean, default: false },
+    preorderDate: { type: Date }, 
   },
   {
     collection: "products",

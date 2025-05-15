@@ -66,6 +66,8 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { FarmersMgmtComponent } from './pages/farmers/farmers-mgmt/farmers-mgmt.component';
 import { FarmerShowComponent } from './pages/farmers/farmer-show/farmer-show.component';
 import { FarmerEditComponent } from './pages/farmers/farmer-edit/farmer-edit.component';
+import { EditQuantityDialogComponent } from './pages/orders/order-edit/edit-quantity-dialog/edit-quantity-dialog.component';
+import { AddProductDialogComponent } from './pages/orders/order-edit/add-product-dialog/add-product-dialog.component';
 
 @NgModule({
   declarations: [
@@ -103,6 +105,8 @@ import { FarmerEditComponent } from './pages/farmers/farmer-edit/farmer-edit.com
     FarmersMgmtComponent,
     FarmerShowComponent,
     FarmerEditComponent,
+    EditQuantityDialogComponent,
+    AddProductDialogComponent,
   ],
   imports: [
     NgxsModule.forRoot([CartState]),
