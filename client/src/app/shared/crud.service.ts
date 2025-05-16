@@ -16,9 +16,11 @@ export class CrudService<T> {
     }
   }
 
-  async getList(): Promise<(T & { id: string })[]> {
+  async getList(
+    options: Record<string, any> = {}
+  ): Promise<(T & { id: string })[]> {
     try {
-      const { data } = await api.get(this.resourcePath);
+      const { data } = await api.get(this.resourcePath, { params: options });
       return data.map((item: any) => ({ id: item._id, ...item }));
     } catch (err: any) {
       throw err.response?.data || { message: `Failed to load list` };

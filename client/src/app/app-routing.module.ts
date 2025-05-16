@@ -30,6 +30,7 @@ import { FarmersMgmtComponent } from './pages/farmers/farmers-mgmt/farmers-mgmt.
 import { FarmerShowComponent } from './pages/farmers/farmer-show/farmer-show.component';
 import { FarmerEditComponent } from './pages/farmers/farmer-edit/farmer-edit.component';
 import { OrdersComponent } from './pages/orders/orders/orders.component';
+import { AddProductComponent } from './pages/products/add-product/add-product.component';
 
 const routes: Routes = [
   {
@@ -76,6 +77,7 @@ const routes: Routes = [
       { path: 'users/:id', component: UserComponent },
       { path: 'users/:id/edit', component: UserEditComponent },
       { path: 'products', component: ProductsMgmtComponent },
+      { path: 'products/new', component: AddProductComponent },
       { path: 'products/:id', component: ProductShowComponent },
       { path: 'products/:id/edit', component: ProductEditComponent },
       { path: 'orders', component: OrdersMgmtComponent },

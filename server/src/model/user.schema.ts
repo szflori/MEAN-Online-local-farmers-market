@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, Types, model } from "mongoose";
 import bcrypt from "bcrypt";
 
 export enum ERole {
@@ -16,8 +16,9 @@ interface IUser extends Document {
   password: string;
   role: string;
   bio: string;
-  avatarUrl: String;
+  avatarUrl: string;
   createdAt: Date;
+  favoriteFarmers: string[];
   comparePassword: (
     candidatePassword: string,
     callback: (error: Error | null, isMatch: boolean) => void
@@ -34,6 +35,12 @@ const UserSchema: Schema<IUser> = new Schema(
     bio: { type: String, required: false },
     avatarUrl: { type: String, required: false },
     createdAt: { type: Date, default: Date.now },
+    favoriteFarmers: [
+      {
+        type: Types.ObjectId,
+        ref: "User",
+      },
+    ],
   },
   {
     collection: "users",

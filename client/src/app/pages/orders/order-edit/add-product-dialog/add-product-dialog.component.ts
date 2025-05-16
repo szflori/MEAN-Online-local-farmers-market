@@ -28,7 +28,10 @@ export class AddProductDialogComponent implements OnInit {
   async ngOnInit() {
     try {
       this.data.farmerId;
-      const res = await this.productsService.getList();
+      console.log(this.data.farmerId)
+      const res = await this.productsService.getList({
+        farmerId: this.data.farmerId,
+      });
       this.products = res;
     } catch (err) {
       console.error('Nem sikerült lekérni a termékeket', err);

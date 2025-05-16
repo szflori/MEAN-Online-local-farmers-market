@@ -40,7 +40,7 @@ export class OrderShowComponent implements OnInit {
   }
 
   editProduct() {
-    if (this.order?.status !== 'COMPLETED') {
+    if (this.order?.status !== 'COMPL%ETED') {
       this.router.navigate(['/management/orders', this.order?.id, 'edit']);
     } else {
       alert('Order is completed');
