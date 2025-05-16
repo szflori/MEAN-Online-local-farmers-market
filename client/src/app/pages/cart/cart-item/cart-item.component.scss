@@ -14,8 +14,18 @@
   .details {
     flex: 1;
 
-    .name {
-      font-weight: bold;
+    .farmer-header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      .farmer-avatar {
+        padding-right: 8px;
+      }
+
+      .name {
+        font-weight: bold;
+      }
     }
 
     .price {

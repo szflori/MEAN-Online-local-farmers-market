@@ -1,1 +1,47 @@
-<p>orders works!</p>
+<h2>Rendeléseim</h2>
+
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+<mat-table [dataSource]="orders" *ngIf="!loading && orders.length > 0" class="mat-elevation-z2">
+    <ng-container matColumnDef="orderNumber">
+        <mat-header-cell *matHeaderCellDef> Rendelési azonosító </mat-header-cell>
+        <mat-cell *matCellDef="let order">
+            <a mat-button [routerLink]="['/app/orders', order._id]">{{ order.orderNumber }}</a>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+        <mat-header-cell *matHeaderCellDef> Dátum </mat-header-cell>
+        <mat-cell *matCellDef="let order"> {{ order.createdAt }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="farmer">
+        <mat-header-cell *matHeaderCellDef> Farmer </mat-header-cell>
+        <mat-cell *matCellDef="let order">
+            <div class="order-cell">
+                <img *ngIf="order.farmer.avatarUrl" [src]="order.farmer.avatarUrl" class="avatar" alt="avatar" />
+                <mat-icon *ngIf="!order.farmer.avatarUrl">person</mat-icon>
+                <a mat-button [routerLink]="['/app/farmers', order.farmer.id]">{{ order.farmer.name }}</a>
+            </div>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef> Státusz </mat-header-cell>
+        <mat-cell *matCellDef="let order"> {{ order.status }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="total">
+        <mat-header-cell *matHeaderCellDef> Összeg </mat-header-cell>
+        <mat-cell *matCellDef="let order"> {{ order.total | currency:'HUF ' }} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+<div *ngIf="!loading && orders.length === 0" class="empty-message">
+    Nincs megjeleníthető rendelés.
+</div>
+
+<mat-error *ngIf="error">{{ error }}</mat-error>

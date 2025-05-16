@@ -7,7 +7,7 @@
       <app-cart-item *ngFor="let item of cartItems$ | async" [item]="item"></app-cart-item>
 
       <div class="cart-summary">
-        <h3>Összesen: {{ totalPrice$ | async | currency:'HUF' }}</h3>
+        <h3>Összesen: {{ totalPrice$ | async | currency:'HUF ' }}</h3>
         <a mat-raised-button color="primary" routerLink="/app/checkout">Megrendelés</a>
       </div>
     </ng-container>

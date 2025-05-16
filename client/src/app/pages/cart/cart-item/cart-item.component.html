@@ -1,0 +1,30 @@
+<div class="cart-item" [class.compact]="compact">
+    <div class="details">
+        <div class="farmer-header">
+            <img *ngIf="!compact" [src]="item.avatarUrl" alt="{{ item.name }}" class="farmer-avatar"/>
+            <div class="name">{{ item.name }}</div>
+        </div>
+
+        <mat-list *ngFor="let product of item.items" class="list">
+            <p>{{product.name}}</p>
+            <div class="price">
+                {{ product.price | currency:'HUF' }} x {{ product.quantity }} =
+                {{ product.price * product.quantity | currency:'HUF' }}
+            </div>
+            <div class="controls">
+                <button mat-mini-button (click)="decrease(product.productId, product.quantity)">−</button>
+                <span>{{ product.quantity }}</span>
+                <button mat-mini-button (click)="increase(product.productId, product.quantity)">+</button>
+                <button mat-icon-button color="warn" (click)="remove(product.productId)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+        </mat-list>
+
+        <mat-divider></mat-divider>
+
+        <div class="cart-total">
+            Összesen: {{ item.total | currency:'HUF ' }}
+        </div>
+    </div>
+</div>

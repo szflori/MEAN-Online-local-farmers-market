@@ -1,4 +1,4 @@
-import { CartItem } from "../interfaces/cart.interface";
+import { CartItem } from '../interfaces/cart.interface';
 
 export class AddItem {
   static readonly type = '[Cart] Add Item';
@@ -7,12 +7,12 @@ export class AddItem {
 
 export class RemoveItem {
   static readonly type = '[Cart] Remove Item';
-  constructor(public productId: string) {}
+  constructor(public farmerId: string, public productId: string) {}
 }
 
 export class UpdateQuantity {
   static readonly type = '[Cart] Update Quantity';
-  constructor(public productId: string, public quantity: number) {}
+  constructor(public farmerId: string, public productId: string, public quantity: number) {}
 }
 
 export class ClearCart {

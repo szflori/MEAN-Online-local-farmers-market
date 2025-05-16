@@ -13,6 +13,7 @@ interface IUser extends Document {
   name: string;
   email: string;
   address?: string;
+  phone?: string;
   password: string;
   role: string;
   bio: string;
@@ -30,6 +31,7 @@ const UserSchema: Schema<IUser> = new Schema(
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     address: { type: String, required: false },
+    phone: { type: String, required: false },
     password: { type: String, required: true },
     role: { type: String, enum: ["USER", "FARMER", "ADMIN"], default: "USER" },
     bio: { type: String, required: false },

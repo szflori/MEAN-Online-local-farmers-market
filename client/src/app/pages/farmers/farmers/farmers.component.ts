@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FarmerService } from '../../../services/farmer.service';
+import { AuthService } from '../../../services/auth.service';
+import { User } from '../../../../interfaces/user.interface';
 
 interface Farmer {
   id: string;
@@ -22,7 +24,16 @@ export class FarmersComponent implements OnInit {
   loading = true;
   error: string | null = null;
 
-  constructor(private farmerService: FarmerService) {}
+  user: User | null = null;
+
+  constructor(
+    private farmerService: FarmerService,
+    private authService: AuthService
+  ) {
+    this.authService.user$.subscribe((u) => {
+      this.user = u;
+    });
+  }
 
   async ngOnInit() {
     try {
@@ -32,5 +43,13 @@ export class FarmersComponent implements OnInit {
     } finally {
       this.loading = false;
     }
+  }
+
+  get isAuthed(): boolean {
+    return !!this.user;
+  }
+
+  getLink(farmerId: string): string[] {
+    return this.isAuthed ? ['/app/farmers', farmerId] : ['/farmers', farmerId];
   }
 }

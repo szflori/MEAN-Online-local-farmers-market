@@ -3,7 +3,7 @@
   <div class="farmer-carousel">
     <div class="farmer" *ngFor="let farmer of farmers">
       <img [src]="farmer.avatarUrl" [alt]="farmer.name" />
-      <a [routerLink]="['/farmers', farmer.id]">{{ farmer.name }}</a>
+      <a [routerLink]="getLink(farmer.id)">{{ farmer.name }}</a>
     </div>
   </div>
 

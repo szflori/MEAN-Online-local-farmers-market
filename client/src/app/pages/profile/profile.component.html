@@ -1,11 +1,12 @@
 <div class="profile-container">
     <mat-card>
         <div class="profile-header">
-            <img src="https://via.placeholder.com/100" alt="avatar" class="avatar">
+            <img [src]="profileForm.value.avatarUrl || '/assets/default-avatar.png'" alt=" avatar" class="avatar">
             <div class="info" *ngIf="!editing; else editForm">
                 <h2>{{ profileForm.value.name }}</h2>
                 <p>{{ profileForm.value.email }}</p>
-                <p>{{ profileForm.value.location }}</p>
+                <p>{{ profileForm.value.phone }}</p>
+                <p>{{ profileForm.value.address }}</p>
             </div>
         </div>
 
@@ -20,8 +21,16 @@
                     <input matInput formControlName="email">
                 </mat-form-field>
                 <mat-form-field class="full-width">
+                    <mat-label>Profile kép</mat-label>
+                    <input matInput formControlName="avatarUrl">
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                    <mat-label>Phone</mat-label>
+                    <input matInput formControlName="phone">
+                </mat-form-field>
+                <mat-form-field class="full-width">
                     <mat-label>Helyszín</mat-label>
-                    <input matInput formControlName="location">
+                    <input matInput formControlName="address">
                 </mat-form-field>
                 <mat-form-field class="full-width">
                     <mat-label>Bemutatkozás</mat-label>

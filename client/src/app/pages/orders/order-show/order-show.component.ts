@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Order } from '../../../../interfaces/order.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { OrderService } from '../../../services/order.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-order-show',
@@ -11,6 +12,8 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './order-show.component.scss',
 })
 export class OrderShowComponent implements OnInit {
+  @Output() menuToggle = new EventEmitter<void>();
+  user: any = null;
   order: Order | null = null;
   form!: FormGroup;
   loading = true;
@@ -18,6 +21,7 @@ export class OrderShowComponent implements OnInit {
   editMode = false;
 
   constructor(
+    private auth: AuthService,
     private route: ActivatedRoute,
     private orderService: OrderService,
     private router: Router,
@@ -27,6 +31,16 @@ export class OrderShowComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) this.loadOrder(id);
+
+    this.auth.user$.subscribe((user) => {
+      this.user = user;
+    });
+
+    this.auth.checkSession();
+  }
+
+  get isUser() {
+    return this.user?.role === 'USER';
   }
 
   async loadOrder(id: string) {
@@ -57,7 +71,7 @@ export class OrderShowComponent implements OnInit {
 
     try {
       await this.orderService.deleteOne(this.order.id);
-      this.router.navigate(['/management/orders']);
+      this.router.navigate([`/${this.isUser ? 'app' : 'management'}/orders`]);
     } catch (err: any) {
       alert(err.message || 'A törlés nem sikerült');
     }

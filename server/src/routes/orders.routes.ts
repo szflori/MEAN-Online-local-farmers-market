@@ -3,6 +3,7 @@ import { body, validationResult } from "express-validator";
 import { Order } from "../model/order.schema";
 import { Product } from "../model/product.schema";
 import { isAuthenticated } from "../middlewares/isAuthenticated";
+import { ERole } from "../model/user.schema";
 
 export const ordersRoutes = (router: Router): Router => {
   router.get("/", isAuthenticated, async (req: Request, res: Response) => {
@@ -10,8 +11,12 @@ export const ordersRoutes = (router: Router): Router => {
       const user = req.user as any;
       let filter = {};
 
-      if (user.role !== "ADMIN") {
+      if (user.role === ERole.USER) {
         filter = { userId: user._id };
+      }
+
+      if (user.role === ERole.FARMER) {
+        filter = { farmerId: user._id };
       }
 
       const orders = await Order.find(filter)
@@ -45,6 +50,7 @@ export const ordersRoutes = (router: Router): Router => {
   router.get("/:id", isAuthenticated, async (req: Request, res: Response) => {
     try {
       const user = req.user as any;
+
       const order: any = await Order.findById(req.params.id)
         .populate("farmerId", "name avatarUrl")
         .populate("userId", "name avatarUrl")
@@ -57,7 +63,8 @@ export const ordersRoutes = (router: Router): Router => {
       }
 
       if (
-        order.userId.toString() !== user._id.toString() &&
+        order.userId._id.toString() !== user._id.toString() &&
+        order.farmerId._id.toString() !== user._id.toString() &&
         user.role !== "ADMIN"
       ) {
         res.status(403).json({ message: "Unauthorized to access this order" });
@@ -99,7 +106,6 @@ export const ordersRoutes = (router: Router): Router => {
     body("items").isArray({ min: 1 }),
     body("address").isString().notEmpty(),
     body("phone").isString().notEmpty(),
-    body("farmerId").isString(),
     async (req: Request, res: Response) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -111,44 +117,51 @@ export const ordersRoutes = (router: Router): Router => {
         const user = req.user as any;
         const { items, fullName, address, phone } = req.body;
 
-        let total = 0;
-        const orderItems: any[] = [];
+        const savedOrdersByFarmer: any[] = [];
 
-        for (const item of items) {
-          const product = await Product.findById(item.productId);
-          if (!product || product.stock < item.quantity) {
-            res
-              .status(400)
-              .json({ message: "Invalid product or insufficient stock" });
-            return;
+        for (const itemByFarmer of items) {
+          let total = 0;
+          const orderItems: any[] = [];
+
+          for (const p of itemByFarmer.items) {
+            const product = await Product.findById(p.productId);
+
+            if (!product || product.stock < p.quantity) {
+              res
+                .status(400)
+                .json({ message: "Invalid product or insufficient stock" });
+              return;
+            }
+
+            total += product.price * p.quantity;
+
+            const orderItem = {
+              productId: product._id,
+              quantity: p.quantity,
+              price: product.price,
+            };
+
+            orderItems.push(orderItem);
+            product.stock -= p.quantity;
+            await product.save();
           }
 
-          total += product.price * item.quantity;
+          const order = new Order({
+            userId: user._id,
+            total,
+            status: "PENDING",
+            items: orderItems,
+            fullName,
+            address,
+            phone,
+            farmerId: itemByFarmer.id,
+          });
 
-          const orderItem = {
-            productId: product._id,
-            quantity: item.quantity,
-            price: product.price,
-          };
-
-          orderItems.push(orderItem);
-
-          product.stock -= item.quantity;
-          await product.save();
+          const savedOrder = await order.save();
+          savedOrdersByFarmer.push(savedOrder);
         }
 
-        const order = new Order({
-          userId: user._id,
-          total,
-          status: "PENDING",
-          items: orderItems.map((item) => item._id),
-          fullName,
-          address,
-          phone,
-        });
-
-        const savedOrder = await order.save();
-        res.status(201).json(savedOrder);
+        res.status(201).json(savedOrdersByFarmer);
       } catch (err: any) {
         res
           .status(400)
@@ -192,6 +205,30 @@ export const ordersRoutes = (router: Router): Router => {
 
     res.json({ message: "Order updated" });
   });
+
+  router.delete(
+    "/:id",
+    isAuthenticated,
+    async (req: Request, res: Response) => {
+      const user = req.user as any;
+      const order = await Order.findById(req.params.id);
+      if (!order) {
+        res.status(404).json({ message: "Order not found" });
+        return;
+      }
+
+      if (
+        order.userId.toString() !== user._id.toString() &&
+        user.role !== "ADMIN"
+      ) {
+        res.status(403).json({ message: "Unauthorized to access this order" });
+        return;
+      }
+
+      await order.deleteOne();
+      res.json({ message: "Order deleted" });
+    }
+  );
 
   return router;
 };

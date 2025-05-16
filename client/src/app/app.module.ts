@@ -16,13 +16,16 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CartComponent } from './cart/cart.component';
+import { CartComponent } from './pages/cart/cart.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthModule } from './auth/auth.module';
-import { CartDropdownComponent } from './cart/cart-dropdown/cart-dropdown.component';
+import { CartDropdownComponent } from './pages/cart/cart-dropdown/cart-dropdown.component';
 import { ProductsComponent } from './pages/products/products/products.component';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
@@ -39,14 +42,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatBadgeModule } from '@angular/material/badge';
 import { CartState } from '../store/cart.state';
-import { CartItemComponent } from './cart/cart-item/cart-item.component';
+import { CartItemComponent } from './pages/cart/cart-item/cart-item.component';
 import { AdminFarmerLayoutComponent } from './layouts/admin-farmer-layout/admin-farmer-layout.component';
 import { UserLayoutComponent } from './layouts/user-layout/user-layout.component';
 import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
 import { PublicHeaderComponent } from './layouts/public-layout/public-header/public-header.component';
 import { UserHeaderComponent } from './layouts/user-layout/user-header/user-header.component';
 import { AdminFarmerHeaderComponent } from './layouts/admin-farmer-layout/admin-farmer-header/admin-farmer-header.component';
-import { CheckoutComponent } from './checkout/checkout.component';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { UsersComponent } from './pages/users-mgmt/users/users.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -70,6 +73,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { FarmersComponent } from './pages/farmers/farmers/farmers.component';
 import { ProductCardComponent } from './pages/products/product-card/product-card.component';
+import { SalesReportComponent } from './pages/sales-report/sales-report.component';
 
 @NgModule({
   declarations: [
@@ -109,9 +113,14 @@ import { ProductCardComponent } from './pages/products/product-card/product-card
     EditQuantityDialogComponent,
     AddProductDialogComponent,
     AddProductComponent,
+    SalesReportComponent,
   ],
   imports: [
     NgxsModule.forRoot([CartState]),
+    NgxsStoragePluginModule.forRoot({
+      keys: ['cart'],
+      storage: 1,
+    }),
     BrowserModule,
     AppRoutingModule,
     CommonModule,
@@ -143,6 +152,8 @@ import { ProductCardComponent } from './pages/products/product-card/product-card
     MatProgressBarModule,
     MatCheckboxModule,
     MatDatepickerModule,
+    BrowserAnimationsModule,
+    NgxChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

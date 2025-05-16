@@ -14,7 +14,7 @@ export const usersRoutes = (router: Router): Router => {
     }
   });
 
-  router.get("/:id", isAdmin, async (req: Request, res: Response) => {
+  router.get("/:id", async (req: Request, res: Response) => {
     try {
       const user = await User.findById(req.params.id).select("-password");
       if (!user) {

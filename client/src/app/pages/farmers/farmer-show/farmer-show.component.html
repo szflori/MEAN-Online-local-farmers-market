@@ -14,10 +14,16 @@
     </mat-card-content>
 
     <mat-card-actions class="actions">
-        <button mat-stroked-button color="primary" (click)="editUser()">Szerkesztés</button>
-        <button mat-raised-button color="warn" (click)="deleteUser()">Törlés</button>
+        <button mat-stroked-button color="primary" *ngIf="!isUser" (click)="editUser()">Szerkesztés</button>
+        <button mat-raised-button color="warn" *ngIf="!isUser" (click)="deleteUser()">Törlés</button>
     </mat-card-actions>
 </mat-card>
+
+<h2>Termékek</h2>
+
+<div *ngIf="!loading && !error" class="product-grid">
+    <app-product-card *ngFor="let product of products" [product]="product" [isAuthed]="isAuthed"></app-product-card>
+</div>
 
 <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 <mat-error *ngIf="error">{{ error }}</mat-error>

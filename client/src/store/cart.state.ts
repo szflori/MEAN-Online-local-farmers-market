@@ -7,6 +7,7 @@ export interface CartItemProps {
   name: string;
   avatarUrl: string;
   items: CartItem[];
+  total: number;
 }
 
 export interface CartStateModel {
@@ -25,11 +26,7 @@ export class CartState {
 
   @Selector()
   static total(state: CartStateModel): number {
-    /* return state.items.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0
-    ); */
-    return 0;
+    return state.farmers.reduce((sum, item) => sum + item.total, 0);
   }
 
   @Selector()
@@ -62,12 +59,24 @@ export class CartState {
       } else {
         existingFarmer.items.push(payload);
       }
+
+      existingFarmer.total = existingFarmer.items.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+      );
     } else {
+      const items = [payload];
+      const total = items.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+      );
+
       farmers.push({
         id: payload.farmer.id,
         name: payload.farmer.name,
         avatarUrl: payload.farmer.avatarUrl,
-        items: [payload],
+        items,
+        total,
       });
     }
 
@@ -77,26 +86,58 @@ export class CartState {
   @Action(RemoveItem)
   remove(
     { getState, patchState }: StateContext<CartStateModel>,
-    { productId }: RemoveItem
+    { farmerId, productId }: RemoveItem
   ) {
+    const updatedFarmers = getState()
+      .farmers.map((farmer) => {
+        if (farmer.id === farmerId) {
+          const newItems = farmer.items.filter(
+            (item) => item.productId !== productId
+          );
+          if (newItems.length === 0) {
+            return null;
+          }
+          return { ...farmer, items: newItems };
+        }
+
+        return farmer;
+      })
+      .filter((f): f is CartItemProps => f !== null);
+
     patchState({
-      farmers: getState().farmers,
+      farmers: updatedFarmers,
     });
   }
 
   @Action(UpdateQuantity)
   update(
     { getState, patchState }: StateContext<CartStateModel>,
-    { productId, quantity }: UpdateQuantity
+    { farmerId, productId, quantity }: UpdateQuantity
   ) {
-    /* const items = getState().items.map((i) =>
-      i.productId === productId ? { ...i, quantity } : i
-    ); */
-    patchState({});
+    const updatedFarmers = getState()
+      .farmers.map((farmer) => {
+        if (farmer.id === farmerId) {
+          const newItems = farmer.items
+            .map((item) =>
+              item.productId === productId ? { ...item, quantity } : item
+            )
+            .filter((item) => item.quantity > 0);
+
+          if (newItems.length === 0) {
+            return null;
+          }
+
+          return { ...farmer, items: newItems };
+        }
+        return farmer;
+      })
+      .filter((f): f is CartItemProps => f !== null);
+
+    patchState({ farmers: updatedFarmers });
   }
 
   @Action(ClearCart)
   clear({ patchState }: StateContext<CartStateModel>) {
-    patchState({});
+    patchState({ farmers: [] });
   }
 }

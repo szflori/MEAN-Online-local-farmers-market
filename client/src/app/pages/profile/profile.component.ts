@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 interface UserProfile {
   id: string;
@@ -17,26 +18,27 @@ interface UserProfile {
   styleUrl: './profile.component.scss',
 })
 export class ProfileComponent implements OnInit {
+  @Output() menuToggle = new EventEmitter<void>();
+  user: any = null;
+
   profileForm!: FormGroup;
   editing = false;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private auth: AuthService) {}
 
   ngOnInit(): void {
-    const profile: UserProfile = {
-      id: 'u1',
-      name: 'Teszt Felhasználó',
-      email: 'teszt@example.com',
-      avatarUrl: 'https://via.placeholder.com/100',
-      location: 'Budapest',
-      bio: 'Egy lelkes helyi termelő, aki kézműves ételeket árul a közösségnek.',
-    };
+    this.auth.user$.subscribe((user) => {
+      this.user = user;
+    });
+    this.auth.checkSession();
 
     this.profileForm = this.fb.group({
-      name: [profile.name, Validators.required],
-      email: [profile.email, [Validators.required, Validators.email]],
-      location: [profile.location],
-      bio: [profile.bio],
+      name: [this.user.name, Validators.required],
+      email: [this.user.email, [Validators.required, Validators.email]],
+      avatarUrl: [this.user.avatarUrl ?? ''],
+      address: [this.user.address ?? ''],
+      phone: [this.user.phone ?? ''],
+      bio: [this.user.bio ?? ''],
     });
   }
 
@@ -44,10 +46,10 @@ export class ProfileComponent implements OnInit {
     this.editing = !this.editing;
   }
 
-  save(): void {
+  async save() {
     if (this.profileForm.valid) {
       const updatedProfile = this.profileForm.value;
-      console.log('Mentett profil:', updatedProfile);
+      await this.auth.updateProfile(updatedProfile);
       this.toggleEdit();
     }
   }

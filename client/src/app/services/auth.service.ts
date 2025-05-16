@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Store } from '@ngxs/store';
 
 import { api } from '../../services/api';
+import { ClearCart } from '../../store/cart.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +11,8 @@ import { api } from '../../services/api';
 export class AuthService {
   private userSubject = new BehaviorSubject<any>(null);
   public user$ = this.userSubject.asObservable();
+
+  constructor(private store: Store) {}
 
   get currentUser() {
     return this.userSubject.value;
@@ -50,6 +54,9 @@ export class AuthService {
         }
       );
       this.userSubject.next(res.data.user);
+
+      this.store.dispatch(new ClearCart());
+
       return res.data;
     } catch (err: any) {
       throw err.response?.data || { message: 'Network error' };
@@ -70,6 +77,8 @@ export class AuthService {
   }
 
   async logout() {
+    this.store.dispatch(new ClearCart());
+
     await api.post(
       `/logout`,
       {},
@@ -78,5 +87,11 @@ export class AuthService {
       }
     );
     this.userSubject.next(null);
+  }
+
+  async updateProfile(payload: any) {
+    await api.patch('/profile', payload, {
+      withCredentials: true,
+    });
   }
 }

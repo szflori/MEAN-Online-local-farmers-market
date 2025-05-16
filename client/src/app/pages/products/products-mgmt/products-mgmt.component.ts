@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../../../services/products.service';
 import { Product } from '../../../../interfaces/product.interface';
+import { AuthService } from '../../../services/auth.service';
+import { User } from '../../../../interfaces/user.interface';
 
 @Component({
   selector: 'app-products-mgmt',
@@ -14,7 +16,17 @@ export class ProductsMgmtComponent implements OnInit {
 
   loading = true;
   error: string | null = null;
-  constructor(private productsService: ProductsService) {}
+
+  user: User | null = null;
+
+  constructor(
+    private productsService: ProductsService,
+    private authService: AuthService
+  ) {
+    this.authService.user$.subscribe((u) => {
+      this.user = u;
+    });
+  }
 
   ngOnInit(): void {
     this.loadProducts();

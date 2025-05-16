@@ -5,7 +5,6 @@ import { FarmerService } from '../../services/farmer.service';
 import { ProductsService } from '../../services/products.service';
 import { AuthService } from '../../services/auth.service';
 
-
 interface Farmer {
   id: string;
   name: string;
@@ -30,16 +29,15 @@ export class HomeComponent implements OnInit {
     private farmerService: FarmerService,
     private productsService: ProductsService,
     private authService: AuthService
-  ) {}
-
-  get isAuthed(): boolean {
-    return !!this.user;
+  ) {
+    this.authService.user$.subscribe((u) => {
+      this.user = u;
+    });
   }
 
   async ngOnInit() {
     try {
       this.farmers = await this.farmerService.getFarmers();
-      console.log(this.farmers);
     } catch (err: any) {
       this.error = err.message || 'Error loading farmers';
     } finally {
@@ -53,5 +51,13 @@ export class HomeComponent implements OnInit {
     } finally {
       this.loading = false;
     }
+  }
+
+  get isAuthed(): boolean {
+    return !!this.user;
+  }
+
+  getLink(farmerId: string): string[] {
+    return this.isAuthed ? ['/app/farmers', farmerId] : ['/farmers', farmerId];
   }
 }

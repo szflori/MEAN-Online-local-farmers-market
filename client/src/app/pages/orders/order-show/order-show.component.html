@@ -43,7 +43,7 @@
     </p>
 
     <mat-card-actions class="actions">
-        <button mat-stroked-button color="primary" (click)="editProduct()">Szerkesztés</button>
+        <button  *ngIf="!isUser" mat-stroked-button color="primary" (click)="editProduct()">Szerkesztés</button>
         <button mat-raised-button color="warn" (click)="deleteProduct()">Törlés</button>
     </mat-card-actions>
 </mat-card>

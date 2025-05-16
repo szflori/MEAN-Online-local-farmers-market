@@ -5,12 +5,12 @@ import { Store } from '@ngxs/store';
 import { CartItemProps, CartState } from '../../../store/cart.state';
 
 @Component({
-  selector: 'app-cart-dropdown',
+  selector: 'app-cart',
   standalone: false,
-  templateUrl: './cart-dropdown.component.html',
-  styleUrl: './cart-dropdown.component.scss',
+  templateUrl: './cart.component.html',
+  styleUrl: './cart.component.scss',
 })
-export class CartDropdownComponent {
+export class CartComponent {
   cartItems$: Observable<CartItemProps[]>;
   totalPrice$: Observable<number>;
   cartItemCount$: Observable<number>;

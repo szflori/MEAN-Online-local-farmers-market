@@ -4,6 +4,7 @@ import { body, validationResult } from "express-validator";
 import { EProductCategory, Product } from "../model/product.schema";
 import { isFarmer } from "../middlewares/isFarmer";
 import { isAuthenticated } from "../middlewares/isAuthenticated";
+import { ERole } from "../model/user.schema";
 
 export const productsRoutes = (router: Router): Router => {
   router.post(
@@ -48,6 +49,9 @@ export const productsRoutes = (router: Router): Router => {
 
   router.get("/", async (req: Request, res: Response) => {
     try {
+      const user = req.user as any;
+      const isFarmer = user.role === ERole.FARMER;
+
       const { category, farmerId, search } = req.query;
       const filter: any = {};
 
@@ -57,6 +61,8 @@ export const productsRoutes = (router: Router): Router => {
 
       if (farmerId) {
         filter.farmerId = farmerId;
+      } else if (isFarmer) {
+        filter.farmerId = user._id;
       }
 
       if (search) {
