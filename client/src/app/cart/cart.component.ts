@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
 
-import { CartItem } from '../../interfaces/cart.interface';
-import { CartState } from '../../store/cart.state';
+import { CartItemProps, CartState } from '../../store/cart.state';
 
 @Component({
   selector: 'app-cart',
@@ -12,7 +11,7 @@ import { CartState } from '../../store/cart.state';
   styleUrl: './cart.component.scss',
 })
 export class CartComponent {
-  cartItems$: Observable<CartItem[]>;
+  cartItems$: Observable<CartItemProps[]>;
   totalPrice$: Observable<number>;
   cartItemCount$: Observable<number>;
 

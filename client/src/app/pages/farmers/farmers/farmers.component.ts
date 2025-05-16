@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FarmerService } from '../services/farmer.service';
+import { FarmerService } from '../../../services/farmer.service';
 
 interface Farmer {
   id: string;
@@ -9,6 +9,8 @@ interface Farmer {
   avatarUrl?: string;
 }
 
+//TODO farmers card add favorite
+// TODO programok és termékek
 @Component({
   selector: 'app-farmers',
   standalone: false,

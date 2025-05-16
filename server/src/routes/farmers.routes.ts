@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import { ERole, User } from "../model/user.schema";
+import { isAuthenticated } from "../middlewares/isAuthenticated";
 
 export const farmersRoutes = (router: Router): Router => {
   router.get("/", async (req: Request, res: Response) => {

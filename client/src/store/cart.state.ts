@@ -2,34 +2,44 @@ import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { AddItem, RemoveItem, UpdateQuantity, ClearCart } from './cart.actions';
 import { CartItem } from '../interfaces/cart.interface';
 
-export interface CartStateModel {
+export interface CartItemProps {
+  id: string;
+  name: string;
+  avatarUrl: string;
   items: CartItem[];
 }
 
-// TODO guest localstore, bejelentkezsnél clear, 
+export interface CartStateModel {
+  farmers: CartItemProps[] | [];
+}
+
 @State<CartStateModel>({
   name: 'cart',
-  defaults: {
-    items: [],
-  },
+  defaults: { farmers: [] },
 })
 export class CartState {
   @Selector()
-  static items(state: CartStateModel): CartItem[] {
-    return state.items;
+  static items(state: CartStateModel): CartItemProps[] {
+    return state.farmers;
   }
 
   @Selector()
   static total(state: CartStateModel): number {
-    return state.items.reduce(
+    /* return state.items.reduce(
       (sum, item) => sum + item.price * item.quantity,
       0
-    );
+    ); */
+    return 0;
   }
 
   @Selector()
   static itemCount(state: CartStateModel): number {
-    return state.items.reduce((total, item) => total + item.quantity, 0);
+    return state.farmers.reduce(
+      (total, item) =>
+        total +
+        item.items.reduce((ptotal, product) => ptotal + product.quantity, 0),
+      0
+    );
   }
 
   @Action(AddItem)
@@ -38,14 +48,30 @@ export class CartState {
     { payload }: AddItem
   ) {
     const state = getState();
-    const items = [...state.items];
-    const existing = items.find((i) => i.productId === payload.productId);
-    if (existing) {
-      existing.quantity += payload.quantity;
+    const farmers = [...state.farmers];
+
+    const existingFarmer = farmers.find((i) => i.id === payload.farmer.id);
+
+    if (existingFarmer) {
+      const existing = existingFarmer.items.find(
+        (i) => i.productId === payload.productId
+      );
+
+      if (existing) {
+        existing.quantity += payload.quantity;
+      } else {
+        existingFarmer.items.push(payload);
+      }
     } else {
-      items.push(payload);
+      farmers.push({
+        id: payload.farmer.id,
+        name: payload.farmer.name,
+        avatarUrl: payload.farmer.avatarUrl,
+        items: [payload],
+      });
     }
-    patchState({ items });
+
+    patchState({ farmers });
   }
 
   @Action(RemoveItem)
@@ -54,7 +80,7 @@ export class CartState {
     { productId }: RemoveItem
   ) {
     patchState({
-      items: getState().items.filter((i) => i.productId !== productId),
+      farmers: getState().farmers,
     });
   }
 
@@ -63,14 +89,14 @@ export class CartState {
     { getState, patchState }: StateContext<CartStateModel>,
     { productId, quantity }: UpdateQuantity
   ) {
-    const items = getState().items.map((i) =>
+    /* const items = getState().items.map((i) =>
       i.productId === productId ? { ...i, quantity } : i
-    );
-    patchState({ items });
+    ); */
+    patchState({});
   }
 
   @Action(ClearCart)
   clear({ patchState }: StateContext<CartStateModel>) {
-    patchState({ items: [] });
+    patchState({});
   }
 }

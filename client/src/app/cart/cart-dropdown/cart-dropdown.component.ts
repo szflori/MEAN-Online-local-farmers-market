@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
 
-import { CartState } from '../../../store/cart.state';
-import { CartItem } from '../../../interfaces/cart.interface';
+import { CartItemProps, CartState } from '../../../store/cart.state';
 
 @Component({
   selector: 'app-cart-dropdown',
@@ -12,7 +11,7 @@ import { CartItem } from '../../../interfaces/cart.interface';
   styleUrl: './cart-dropdown.component.scss',
 })
 export class CartDropdownComponent {
-  cartItems$: Observable<CartItem[]>;
+  cartItems$: Observable<CartItemProps[]>;
   totalPrice$: Observable<number>;
   cartItemCount$: Observable<number>;
 

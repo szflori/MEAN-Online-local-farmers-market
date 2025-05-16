@@ -9,7 +9,7 @@ export function isFarmer(req: Request, res: Response, next: NextFunction) {
     return;
   }
 
-  if (user.role !== ERole.FARMER || user.role !== ERole.ADMIN) {
+  if (user.role !== ERole.FARMER && user.role !== ERole.ADMIN) {
     res.status(403).json({ message: "Access restricted to farmers only" });
     return;
   }

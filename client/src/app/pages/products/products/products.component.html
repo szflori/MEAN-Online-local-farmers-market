@@ -1,1 +1,14 @@
-<p>products works!</p>
+<div class="products-container">
+  <h2>Termékek</h2>
+
+  <div *ngIf="loading">Loading products...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div *ngIf="!loading && !error" class="product-grid">
+    <app-product-card
+      *ngFor="let product of products"
+      [product]="product"
+      [isAuthed]="isAuthed"
+    ></app-product-card>
+  </div>
+</div>

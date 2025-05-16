@@ -1,29 +1,35 @@
 <mat-toolbar color="primary" class="container">
-    <div class="left">
-        <span class="logo" routerLink="/">🛒 Farmers Market</span>
+  <div class="left">
+    <span class="logo" routerLink="/">🛒 Farmers Market</span>
 
-        <div class="nav-links hide-on-mobile">
-            <a mat-button routerLink="/products">Products</a>
-            <a mat-button routerLink="/farmers">Farmers</a>
-        </div>
+    <div class="nav-links hide-on-mobile">
+      <a mat-button routerLink="/products">Products</a>
+      <a mat-button routerLink="/farmers">Farmers</a>
+    </div>
+  </div>
+
+  <nav class="right">
+    <div class="hide-on-mobile">
+      <button mat-button routerLink="/login">Login</button>
+      <button mat-stroked-button color="accent" routerLink="/register">
+        Sign up
+      </button>
     </div>
 
-    <nav class="right">
-        <div class="hide-on-mobile">
-            <button mat-button routerLink="/login">Login</button>
-            <button mat-stroked-button color="accent" routerLink="/register">Sign up</button>
-        </div>
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="mobileMenu"
+      class="show-on-mobile"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
 
-        <button mat-icon-button [matMenuTriggerFor]="mobileMenu" class="show-on-mobile">
-            <mat-icon>menu</mat-icon>
-        </button>
-
-        <mat-menu #mobileMenu="matMenu">
-            <button mat-menu-item routerLink="/products">Products</button>
-            <button mat-menu-item routerLink="/farmers">Farmers</button>
-            <mat-divider></mat-divider>
-            <button mat-menu-item routerLink="/login">Login</button>
-            <button mat-menu-item routerLink="/register">Sign up</button>
-        </mat-menu>
-    </nav>
+    <mat-menu #mobileMenu="matMenu">
+      <button mat-menu-item routerLink="/products">Products</button>
+      <button mat-menu-item routerLink="/farmers">Farmers</button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item routerLink="/login">Login</button>
+      <button mat-menu-item routerLink="/register">Sign up</button>
+    </mat-menu>
+  </nav>
 </mat-toolbar>

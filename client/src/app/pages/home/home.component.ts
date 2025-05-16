@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FarmerService } from '../services/farmer.service';
-import { Product } from '../../interfaces/product.interface';
-import { ProductsService } from '../services/products.service';
-import { AuthService } from '../services/auth.service';
-import { User } from '../../interfaces/user.interface';
+import { Product } from '../../../interfaces/product.interface';
+import { User } from '../../../interfaces/user.interface';
+import { FarmerService } from '../../services/farmer.service';
+import { ProductsService } from '../../services/products.service';
+import { AuthService } from '../../services/auth.service';
+
 
 interface Farmer {
   id: string;

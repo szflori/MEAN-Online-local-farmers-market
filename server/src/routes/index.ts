@@ -8,6 +8,7 @@ import { ordersRoutes } from "./orders.routes";
 import { farmersRoutes } from "./farmers.routes";
 import { usersRoutes } from "./users.routes";
 import { salesRoutes } from "./sales.routes";
+import { csaProgramsRoutes } from "./csa-program.routes";
 
 export const configureRoutes = (passport: PassportStatic): Router => {
   const router = express.Router();
@@ -23,6 +24,8 @@ export const configureRoutes = (passport: PassportStatic): Router => {
   router.use("/farmers", farmersRoutes(express.Router()));
 
   router.use("/sales-report", salesRoutes(express.Router()));
+
+  router.use("/csa-programs", csaProgramsRoutes(express.Router()));
 
   return router;
 };

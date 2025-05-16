@@ -99,6 +99,7 @@ export const ordersRoutes = (router: Router): Router => {
     body("items").isArray({ min: 1 }),
     body("address").isString().notEmpty(),
     body("phone").isString().notEmpty(),
+    body("farmerId").isString(),
     async (req: Request, res: Response) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {

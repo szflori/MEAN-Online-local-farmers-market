@@ -3,14 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from './guards/auth.guard';
 
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { CartComponent } from './cart/cart.component';
-import { ProductsComponent } from './products/products.component';
-import { FarmersComponent } from './farmers/farmers.component';
-import { FarmerProductsComponent } from './farmers/farmer-products/farmer-products.component';
-import { ProfileComponent } from './profile/profile.component';
+import { ProductsComponent } from './pages/products/products/products.component';
+
+import { ProfileComponent } from './pages/profile/profile.component';
 import { FarmerRegisterComponent } from './auth/farmer-register/farmer-register.component';
 import { AdminFarmerLayoutComponent } from './layouts/admin-farmer-layout/admin-farmer-layout.component';
 import { UserLayoutComponent } from './layouts/user-layout/user-layout.component';
@@ -31,6 +30,7 @@ import { FarmerShowComponent } from './pages/farmers/farmer-show/farmer-show.com
 import { FarmerEditComponent } from './pages/farmers/farmer-edit/farmer-edit.component';
 import { OrdersComponent } from './pages/orders/orders/orders.component';
 import { AddProductComponent } from './pages/products/add-product/add-product.component';
+import { FarmersComponent } from './pages/farmers/farmers/farmers.component';
 
 const routes: Routes = [
   {
@@ -43,7 +43,7 @@ const routes: Routes = [
       { path: 'farmer-register', component: FarmerRegisterComponent },
       { path: 'products', component: ProductsComponent },
       { path: 'farmers', component: FarmersComponent },
-      { path: 'farmers/:id', component: FarmerProductsComponent },
+      { path: 'farmers/:id', component: FarmerShowComponent },
     ],
   },
 
@@ -55,7 +55,7 @@ const routes: Routes = [
       { path: '', redirectTo: '', pathMatch: 'full' },
       { path: 'products', component: ProductsComponent },
       { path: 'farmers', component: FarmersComponent },
-      { path: 'farmers/:id', component: FarmerProductsComponent },
+      { path: 'farmers/:id', component: FarmerShowComponent }, //TODO farmer oldal a termékek és programokkal
       {
         path: 'profile',
         component: ProfileComponent,
@@ -86,6 +86,7 @@ const routes: Routes = [
       { path: 'farmers', component: FarmersMgmtComponent },
       { path: 'farmers/:id', component: FarmerShowComponent },
       { path: 'farmers/:id/edit', component: FarmerEditComponent },
+      /* { path: 'programs' }, */ //TODO csa programs crud
     ],
   },
 ];

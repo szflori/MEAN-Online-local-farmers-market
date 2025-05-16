@@ -2,10 +2,50 @@ import { Router, Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 
 import { EProductCategory, Product } from "../model/product.schema";
-import passport from "passport";
 import { isFarmer } from "../middlewares/isFarmer";
+import { isAuthenticated } from "../middlewares/isAuthenticated";
 
 export const productsRoutes = (router: Router): Router => {
+  router.post(
+    "/",
+    isAuthenticated,
+    isFarmer,
+    body("name").isString().notEmpty(),
+    body("category").isIn(Object.values(EProductCategory)),
+    body("description").optional().isString(),
+    body("price").isFloat({ gt: 0 }),
+    body("stock").isInt({ min: 0 }),
+    body("imageUrl").optional().isString(),
+    async (req: Request, res: Response) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        res.status(400).json({ errors: errors.array() });
+        return;
+      }
+
+      try {
+        const user = req.user as any;
+
+        const { name, description, price, stock, imageUrl } = req.body;
+
+        const newProduct = new Product({
+          name,
+          description,
+          price,
+          stock,
+          imageUrl,
+          farmerId: user.id,
+        });
+
+        const savedProduct = await newProduct.save();
+        res.status(201).json(savedProduct);
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Failed to create product" });
+      }
+    }
+  );
+
   router.get("/", async (req: Request, res: Response) => {
     try {
       const { category, farmerId, search } = req.query;
@@ -69,48 +109,9 @@ export const productsRoutes = (router: Router): Router => {
     }
   });
 
-  router.post(
-    "/",
-    passport.authenticate("session"),
-    isFarmer,
-    body("name").isString().notEmpty(),
-    body("category").isIn(Object.values(EProductCategory)),
-    body("description").optional().isString(),
-    body("price").isFloat({ gt: 0 }),
-    body("stock").isInt({ min: 0 }),
-    body("imageUrl").optional().isString(),
-    async (req: Request, res: Response) => {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        res.status(400).json({ errors: errors.array() });
-        return;
-      }
-
-      try {
-        const user = req.user as any;
-
-        const { name, description, price, stock, imageUrl } = req.body;
-
-        const newProduct = new Product({
-          name,
-          description,
-          price,
-          stock,
-          imageUrl,
-          farmerId: user.id,
-        });
-
-        const savedProduct = await newProduct.save();
-        res.status(201).json(savedProduct);
-      } catch (err) {
-        res.status(500).json({ message: "Failed to create product" });
-      }
-    }
-  );
-
   router.patch(
     "/:id",
-    passport.authenticate("session"),
+    isAuthenticated,
     isFarmer,
     body("name").optional().isString().notEmpty(),
     body("category").optional().isIn(Object.values(EProductCategory)),
@@ -158,7 +159,7 @@ export const productsRoutes = (router: Router): Router => {
   // DELETE product
   router.delete(
     "/:id",
-    passport.authenticate("session"),
+    isAuthenticated,
     isFarmer,
     async (req: Request, res: Response) => {
       try {

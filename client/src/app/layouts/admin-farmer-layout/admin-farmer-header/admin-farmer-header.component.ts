@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 
+//TODO logo navigation
 @Component({
   selector: 'app-admin-farmer-header',
   standalone: false,

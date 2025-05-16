@@ -20,17 +20,15 @@ import { MatDividerModule } from '@angular/material/divider';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CartComponent } from './cart/cart.component';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './pages/home/home.component';
 import { AuthModule } from './auth/auth.module';
 import { CartDropdownComponent } from './cart/cart-dropdown/cart-dropdown.component';
-import { ProductsComponent } from './products/products.component';
+import { ProductsComponent } from './pages/products/products/products.component';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormField, MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FarmersComponent } from './farmers/farmers.component';
-import { FarmerProductsComponent } from './farmers/farmer-products/farmer-products.component';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SuccessDialogComponent } from './shared/success-dialog/success-dialog.component';
@@ -41,7 +39,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatBadgeModule } from '@angular/material/badge';
 import { CartState } from '../store/cart.state';
-import { ProductCardComponent } from './components/product-card/product-card.component';
 import { CartItemComponent } from './cart/cart-item/cart-item.component';
 import { AdminFarmerLayoutComponent } from './layouts/admin-farmer-layout/admin-farmer-layout.component';
 import { UserLayoutComponent } from './layouts/user-layout/user-layout.component';
@@ -69,6 +66,10 @@ import { FarmerEditComponent } from './pages/farmers/farmer-edit/farmer-edit.com
 import { EditQuantityDialogComponent } from './pages/orders/order-edit/edit-quantity-dialog/edit-quantity-dialog.component';
 import { AddProductDialogComponent } from './pages/orders/order-edit/add-product-dialog/add-product-dialog.component';
 import { AddProductComponent } from './pages/products/add-product/add-product.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { FarmersComponent } from './pages/farmers/farmers/farmers.component';
+import { ProductCardComponent } from './pages/products/product-card/product-card.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,6 @@ import { AddProductComponent } from './pages/products/add-product/add-product.co
     CartDropdownComponent,
     ProductsComponent,
     FarmersComponent,
-    FarmerProductsComponent,
     ProfileComponent,
     SuccessDialogComponent,
     ErrorDialogComponent,
@@ -141,6 +141,8 @@ import { AddProductComponent } from './pages/products/add-product/add-product.co
     MatBadgeModule,
     MatTableModule,
     MatProgressBarModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

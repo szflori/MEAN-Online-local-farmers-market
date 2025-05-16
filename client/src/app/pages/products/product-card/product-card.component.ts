@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { CartItem } from '../../../interfaces/cart.interface';
-import { AddItem } from '../../../store/cart.actions';
-import { Product } from '../../../interfaces/product.interface';
+import { CartItem } from '../../../../interfaces/cart.interface';
+import { AddItem } from '../../../../store/cart.actions';
 
 @Component({
   selector: 'app-product-card',
@@ -27,9 +26,8 @@ export class ProductCardComponent {
       price: this.product.price,
       quantity: 1,
       imageUrl: this.product.imageUrl,
+      farmer: this.product.farmer,
     };
-
-    console.log('ADDED');
 
     this.store.dispatch(new AddItem(item));
   }

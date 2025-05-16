@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../../../services/products.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-add-product',
@@ -10,11 +11,15 @@ import { ProductsService } from '../../../services/products.service';
   styleUrl: './add-product.component.scss',
 })
 export class AddProductComponent implements OnInit {
+  @Output() menuToggle = new EventEmitter<void>();
+  user: any = null;
+  
   form!: FormGroup;
   loading = false;
   error: string | null = null;
 
   constructor(
+    private auth: AuthService,
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
@@ -27,7 +32,7 @@ export class AddProductComponent implements OnInit {
       description: [''],
       category: ['', Validators.required],
       price: [0, [Validators.required, Validators.min(0)]],
-      stock: [0, [Validators.required, Validators.min(0)]],
+      stock: [0, [Validators.min(0)]],
       imageUrl: [''],
       isPreorder: [false],
       preorderDate: [null],
@@ -42,6 +47,12 @@ export class AddProductComponent implements OnInit {
         stockControl?.enable();
       }
     });
+
+    this.auth.user$.subscribe((user) => {
+      this.user = user;
+    });
+
+    this.auth.checkSession();
   }
 
   async onSubmit() {
@@ -49,6 +60,8 @@ export class AddProductComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
+    const payload = {}
+    
     try {
       await this.productsService.createOne(this.form.value);
       this.router.navigate(['/management/products']);
