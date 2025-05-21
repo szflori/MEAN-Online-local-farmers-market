@@ -13,6 +13,14 @@
         <mat-option value="vegetables">vegetables</mat-option>
         <mat-option value="fruits">fruits</mat-option>
         <mat-option value="dairy">dairy</mat-option>
+        <mat-option value="meat">meat</mat-option>
+        <mat-option value="bakery">bakery</mat-option>
+        <mat-option value="honey-jams">honey-jams</mat-option>
+        <mat-option value="beverages">beverages</mat-option>
+        <mat-option value="handmade">handmade</mat-option>
+        <mat-option value="natural-cosmetics">natural-cosmetics</mat-option>
+        <mat-option value="bio">bio</mat-option>
+        <mat-option value="seasonal">seasonal</mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -31,9 +39,9 @@
       <input matInput formControlName="price" />
     </mat-form-field>
 
-    <mat-checkbox formControlName="isPreorder" class="full-width">
+   <!--  <mat-checkbox formControlName="isPreorder" class="full-width">
       Előrendelhető
-    </mat-checkbox>
+    </mat-checkbox> -->
 
     <mat-form-field appearance="fill" *ngIf="form.get('isPreorder')?.value">
       <mat-label>Várható szállítási dátum</mat-label>
