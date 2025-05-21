@@ -2,6 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProductsService } from '../../../../services/products.service';
+import { OrderService } from '../../../../services/order.service';
+import { Order } from '../../../../../interfaces/order.interface';
 
 @Component({
   selector: 'app-add-product-dialog',
@@ -15,9 +17,10 @@ export class AddProductDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<AddProductDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { farmerId: string },
+    @Inject(MAT_DIALOG_DATA) public data: { farmerId: string; order: Order },
     private fb: FormBuilder,
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private orderService: OrderService
   ) {
     this.form = this.fb.group({
       productId: ['', Validators.required],
@@ -28,7 +31,7 @@ export class AddProductDialogComponent implements OnInit {
   async ngOnInit() {
     try {
       this.data.farmerId;
-      console.log(this.data.farmerId)
+      console.log(this.data.farmerId);
       const res = await this.productsService.getList({
         farmerId: this.data.farmerId,
       });
@@ -49,8 +52,21 @@ export class AddProductDialogComponent implements OnInit {
         category: selectedProduct.category,
         price: selectedProduct.price,
         quantity: this.form.value.quantity,
+        ...selectedProduct,
       };
-      this.dialogRef.close(result);
+
+      const exists = this.data.order.items.find(
+        (i) => i.productId === result.productId
+      );
+      if (exists) {
+        exists.quantity += result.quantity;
+      } else {
+        this.data.order.items.push(result);
+      }
+
+      this.orderService.updateOne(this.data.order.id, this.data.order);
+
+      this.dialogRef.close();
     }
   }
 }

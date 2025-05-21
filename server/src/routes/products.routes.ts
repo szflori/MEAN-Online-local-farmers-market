@@ -27,15 +27,27 @@ export const productsRoutes = (router: Router): Router => {
       try {
         const user = req.user as any;
 
-        const { name, description, price, stock, imageUrl } = req.body;
-
-        const newProduct = new Product({
+        const {
           name,
+          category,
           description,
           price,
           stock,
           imageUrl,
-          farmerId: user.id,
+          isPreorder,
+          preorderDate,
+        } = req.body;
+
+        const newProduct = new Product({
+          name,
+          category,
+          description,
+          price,
+          stock,
+          imageUrl,
+          farmerId: user._id,
+          isPreorder,
+          preorderDate,
         });
 
         const savedProduct = await newProduct.save();
@@ -141,7 +153,7 @@ export const productsRoutes = (router: Router): Router => {
           return;
         }
 
-        const isOwner = product.farmerId.toString() === user.id;
+        const isOwner = product.farmerId.toString() === user._id;
         const isAdmin = user.role === "ADMIN";
 
         if (!isOwner && !isAdmin) {

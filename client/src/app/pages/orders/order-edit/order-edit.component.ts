@@ -88,21 +88,8 @@ export class OrderEditComponent implements OnInit {
   }
 
   openAddProductDialog() {
-    const dialogRef = this.dialog.open(AddProductDialogComponent, {
-      data: { farmerId: this.order.farmer.id },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        const exists = this.order.items.find(
-          (i) => i.productId === result.productId
-        );
-        if (exists) {
-          exists.quantity += result.quantity;
-        } else {
-          this.order.items.push(result);
-        }
-      }
+    this.dialog.open(AddProductDialogComponent, {
+      data: { farmerId: this.order.farmer.id, order: this.order },
     });
   }
 }

@@ -183,27 +183,30 @@ export const ordersRoutes = (router: Router): Router => {
       return;
     }
 
-    const updates: any = {};
+    console.log(user._id === order.farmerId);
+    console.log(user._id);
+    console.log(order.farmerId.toString());
 
     if (
       user.role === "ADMIN" ||
-      (user.role === "FARMER" && user._id.equals(order.farmerId))
+      (user.role === "FARMER" && user._id === order.farmerId.toString())
     ) {
-      if (req.body.status) updates.status = req.body.status;
+      if (req.body.status) order.status = req.body.status;
     }
 
     if (
       user.role === "ADMIN" ||
       (user.role === "USER" && user._id.equals(order.userId))
     ) {
-      if (req.body.address) updates.address = req.body.address;
-      if (req.body.phone) updates.phone = req.body.phone;
+      if (req.body.address) order.address = req.body.address;
+      if (req.body.phone) order.phone = req.body.phone;
     }
 
-    Object.assign(order, updates);
-    await order.save();
+    const updated = await Order.findByIdAndUpdate(order.id, order, {
+      new: true,
+    });
 
-    res.json({ message: "Order updated" });
+    res.json(updated);
   });
 
   router.delete(

@@ -1,7 +1,7 @@
 <mat-card *ngIf="!loading && form">
   <mat-card-title>Termék szerkesztése</mat-card-title>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="product-form">
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Név</mat-label>
       <input matInput formControlName="name" required />
@@ -31,9 +31,9 @@
       <input matInput formControlName="price" />
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-checkbox formControlName="isPreorder"> Előrendelhető </mat-checkbox>
-    </mat-form-field>
+    <mat-checkbox formControlName="isPreorder" class="full-width">
+      Előrendelhető
+    </mat-checkbox>
 
     <mat-form-field appearance="fill" *ngIf="form.get('isPreorder')?.value">
       <mat-label>Várható szállítási dátum</mat-label>

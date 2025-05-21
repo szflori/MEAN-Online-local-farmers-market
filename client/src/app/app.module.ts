@@ -29,7 +29,7 @@ import { CartDropdownComponent } from './pages/cart/cart-dropdown/cart-dropdown.
 import { ProductsComponent } from './pages/products/products/products.component';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-import { MatFormField, MatInputModule } from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { CommonModule } from '@angular/common';
@@ -142,7 +142,6 @@ import { SalesReportComponent } from './pages/sales-report/sales-report.componen
     MatSelectModule,
     MatInputModule,
     FormsModule,
-    MatFormField,
     MatFormFieldModule,
     MatDialogModule,
     MatSliderModule,
