@@ -70,6 +70,7 @@ async function seed() {
       price: 500,
       stock: 30,
       farmerId: farmers[0]._id,
+      isPreorder: false,
       imageUrl:
         "https://kakaobab.com/cdn/shop/articles/sambiranogold-paradicsom_1e86b753-79e4-42b9-a99b-8f7b24db284f.jpg?v=1586249760",
     },
@@ -80,6 +81,7 @@ async function seed() {
       price: 300,
       stock: 50,
       farmerId: farmers[0]._id,
+      isPreorder: false,
       imageUrl:
         "https://tudatosvasarlo.hu/wp-content/uploads/eric-prouzet-Ky6x9T8j128-unsplash-1.jpg",
     },
@@ -90,6 +92,7 @@ async function seed() {
       price: 400,
       stock: 20,
       farmerId: farmers[1]._id,
+      isPreorder: false,
       imageUrl:
         "https://gyogyszernelkul.com/wp-content/uploads/2017/11/tapanyagot-es-egeszseget-ad-zold-alma.jpg",
     },
